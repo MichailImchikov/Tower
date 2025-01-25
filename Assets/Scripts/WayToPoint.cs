@@ -9,11 +9,11 @@ public class WayToPoint
     public Vector3Int lastPointToMap => pointsWay.Last().PointToMap;
     public Vector3 lastPointToWorld => pointsWay.Last().PointToWorld;
     public int SizeWay => pointsWay.Count;
-    private List<PointMap> pointsWay { get; set; }
-    private int currentPoint;
+    public List<PointMap> pointsWay { get; set; }// todo return private
+    public  int currentPoint = 0;// todo return private
     public PointMap GetNextPoint()
     {
-        if (pointsWay.Count - 1 >= currentPoint) return null;
+        if (pointsWay.Count - 1 <= currentPoint) return null;
         currentPoint++;
         return pointsWay[currentPoint];
     }

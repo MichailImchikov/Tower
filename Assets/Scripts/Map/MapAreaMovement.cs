@@ -3,14 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MapAreaMovement : AMap
+public class MapAreaMovement : MonoBehaviour, IObserverAction
 {
-    public void SetTile(TileBase tile, WayToPoint way)
+    private Tilemap _tilemap;
+    public TileBase TileWay;
+    void Awake()
     {
-        _tilemap.SetTile(way.lastPointToMap, tile);
+        _tilemap = GetComponent<Tilemap>();
     }
-    public void ClearTile()
+    public void SetTile(WayToPoint way)
+    {
+        _tilemap.SetTile(way.lastPointToMap,TileWay);
+    }
+    private void ClearTile()
     {
         _tilemap.ClearAllTiles();
+    }
+
+    public void UpdateStatus(StatusUnit status)
+    {
+
+    }
+
+    public void UpdateStatus(StatusUnit status, UnitData unitData)
+    {
+        if (status == StatusUnit.Move)
+            ClearTile();
+        if (status == StatusUnit.Idle)
+        {
+            foreach(var way in unitData.listValidPointForMove)
+            {
+                SetTile(way);
+            }
+        }    
     }
 }

@@ -4,8 +4,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GeneralTileMap : AMap
+public class GeneralTileMap : MonoBehaviour, IObserverAction
 {
+    private Tilemap _tilemap;
+    void Awake()
+    {
+        _tilemap = GetComponent<Tilemap>();
+    }
+    public PointMap newPoint(Vector3 pointToWorld) => new(pointToWorld, _tilemap);
+    public PointMap newPoint(Vector3Int pointToMap) => new(pointToMap, _tilemap);
     public List<WayToPoint> GetAreaMovement(Vector3 position,int speed,LayerMask layerObstacle)
     {
         List<WayToPoint> areaMovement = new();
@@ -26,26 +33,31 @@ public class GeneralTileMap : AMap
     }
     private void CheckArea(WayToPoint WayToPoint,int speed, List<WayToPoint> area, Vector3Int offset,LayerMask _layerMask)
     {
-        var newPos = WayToPoint.lastPointToMap + offset;
-        var newPos2 = new Vector3Int(newPos.x, newPos.y,0);
         var newPosition = newPoint(WayToPoint.lastPointToMap + offset);
         WayToPoint newWayToPoint = new(WayToPoint,newPosition);
-        if (_tilemap.GetTile(newPos2) == null) return;
+        if (!_tilemap.HasTile(newWayToPoint.lastPointToMap)) return;
         if (!CheckValidWay(WayToPoint.lastPointToWorld, newWayToPoint.lastPointToWorld, _layerMask)) return;
         var oldWay = area.FirstOrDefault(x => x.lastPointToMap == newWayToPoint.lastPointToMap);
         if (oldWay is not null)
             oldWay.CheckBestWay(newWayToPoint);
+
         else
-        {
             area.Add(newWayToPoint);
-            CreateAreaMovement(newWayToPoint, speed - 1, area, _layerMask);
-        }
+        CreateAreaMovement(newWayToPoint, speed - 1, area, _layerMask);
     }
-    public bool CheckValidWay(Vector3 startPosition, Vector3 endPosition, LayerMask layerMaskObstacle)
+    private bool CheckValidWay(Vector3 startPosition, Vector3 endPosition, LayerMask layerMaskObstacle)
     {
         var direction = (endPosition - startPosition).normalized;
         var distance = Vector2.Distance(startPosition, endPosition);
         RaycastHit2D[] hits = Physics2D.RaycastAll(startPosition, direction, distance, layerMaskObstacle);
         return hits.Length == 0;
+    }
+
+    public void UpdateStatus(StatusUnit status, UnitData unitData)
+    {
+        if(status == StatusUnit.Idle)
+        {
+            unitData.listValidPointForMove = GetAreaMovement(unitData.transformUnit.position, unitData.MaxCellMove, unitData._layerMaskObstacle);
+        }
     }
 }

@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Dependencies.NCalc;
+using UnityEngine;
+using static UnityEngine.UI.Image;
+
+public class PlayerMB : UnitMB
+{
+    public void EndMove()
+    {
+        SetTemperature(StatusUnit.Idle);
+    }
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0) && statusUnit != StatusUnit.Move)
+        {
+            var positionClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var validPoint = MapManagerMB.Instance.generalTileMap.newPoint(positionClick);
+            var RequestToMove = unitData.listValidPointForMove.FirstOrDefault(x => validPoint.PointToMap == x.lastPointToMap);
+            if(RequestToMove is not null)
+            {
+                unitData._wayToPoint = RequestToMove;
+                SetTemperature(StatusUnit.Move);
+            }
+        }
+    }
+}

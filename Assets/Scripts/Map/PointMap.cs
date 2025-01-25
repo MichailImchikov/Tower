@@ -1,18 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
-public abstract class AMap : MonoBehaviour
-{
-    protected static Tilemap _tilemap;
-    void Awake()
-    {
-        _tilemap = GetComponent<Tilemap>();
-    }
-    public static PointMap newPoint(Vector3 pointToWorld) => new(pointToWorld, _tilemap); 
-    public static PointMap newPoint(Vector3Int pointToMap) => new(pointToMap, _tilemap);
-}
 public class PointMap
 {
     private Vector3 _pointToWorld;
