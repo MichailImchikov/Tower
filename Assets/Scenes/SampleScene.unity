@@ -6941,7 +6941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a001c1bbfdca847bbafe8e308a7130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadedColor: {r: 1, g: 1, b: 1, a: 0.5}
 --- !u!4 &161794088 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2055102311959635375, guid: f681a54372d73d74785b9c9d4ac477e8, type: 3}
@@ -12827,6 +12826,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1931464609891322092, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
+      propertyPath: MaxCellMove
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3220510580749785572, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_Name
       value: Player
@@ -12873,7 +12876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5407899210971094836, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00015258789
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5407899210971094836, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12893,11 +12896,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5407899210971094836, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -5.6189146
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5407899210971094836, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5.07535
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5407899210971094836, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
