@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MapManager : MonoBehaviour
+public class MapManagerMB : MonoBehaviour
 {
     private Tilemap[] _tilesMap;
     private GeneralTileMap _generalTileMap;
