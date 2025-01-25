@@ -14,10 +14,9 @@ public class PlayerMB : UnitMB
             var validPoint = _mapManager.CheckValidPoint(positionClick, listValidPointForMove);
             if(validPoint.HasValue)
             {
-                listValidPointForMove = _mapManager.GetAreMovment(validPoint.Value, speed, _layerMaskObstacle);
+                listValidPointForMove = _mapManager.GetAreMovement(validPoint.Value, speed, _layerMaskObstacle);
                 transform.position = validPoint.Value;
             }
-
         }
     }
 }

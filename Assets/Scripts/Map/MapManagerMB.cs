@@ -17,11 +17,7 @@ public class MapManagerMB : MonoBehaviour
         _tilesMap.FirstOrDefault(x => x.TryGetComponent<GeneralTileMap>(out _generalTileMap));
         _tilesMap.FirstOrDefault(x => x.TryGetComponent<MapAreaMovement>(out _mapAreaMovment));
     }
-    public Vector3 GetCenterGeneralTile(Vector3 position)
-    {
-        return _generalTileMap.GetCenterTileByPosition(position);
-    }
-    public List<Vector3Int> GetAreMovment(Vector3 position, int speed, LayerMask layerObstacle)
+    public List<Vector3Int> GetAreMovement(Vector3 position, int speed, LayerMask layerObstacle)
     {
         var area = _generalTileMap.GetAreaMovement(position, speed, layerObstacle);
         _mapAreaMovment.ClearTile();

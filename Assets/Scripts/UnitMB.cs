@@ -12,7 +12,6 @@ public class UnitMB : MonoBehaviour
     {
         _mapManager = FindObjectOfType<MapManagerMB>();
         _layerMaskObstacle = LayerMask.GetMask("Obstacle");
-        listValidPointForMove = _mapManager.GetAreMovment(transform.position, speed, _layerMaskObstacle);
-        transform.position = _mapManager.GetCenterGeneralTile(transform.position);
+        listValidPointForMove = _mapManager.GetAreMovement(transform.position, speed, _layerMaskObstacle);
     }
 }
