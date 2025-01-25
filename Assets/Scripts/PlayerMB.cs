@@ -8,18 +8,16 @@ public class PlayerMB : UnitMB
 {
     private void Update()
     {
-        var aredMovment = _mapManager.GetAreMovment(transform.position, speed);
         if(Input.GetMouseButtonDown(0))
         {
             var positionClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var centerTile = _mapManager.GetCenterGeneralTile(positionClick);
-            var direction = (centerTile - transform.position).normalized;
-            var distance = Vector2.Distance(transform.position, centerTile);
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, _layerMaskObstacle);
-            if (hits.Length == 0)
+            var validPoint = _mapManager.CheckValidPoint(positionClick, listValidPointForMove);
+            if(validPoint.HasValue)
             {
-                transform.position = centerTile;
+                listValidPointForMove = _mapManager.GetAreMovment(validPoint.Value, speed, _layerMaskObstacle);
+                transform.position = validPoint.Value;
             }
+
         }
     }
 }
