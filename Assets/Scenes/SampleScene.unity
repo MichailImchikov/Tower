@@ -12132,6 +12132,18 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2279018487669377895, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.10588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279018487669377895, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.45882356
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279018487669377895, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.44705886
+      objectReference: {fileID: 0}
     - target: {fileID: 3220510580749785572, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_Name
       value: Player
