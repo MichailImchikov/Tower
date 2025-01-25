@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class UnitMB : MonoBehaviour
 {
-    protected MapManagerMB mapManager;
+    protected MapManagerMB _mapManager;
     protected LayerMask _layerMaskObstacle;
+    public int speed;
     private void Start()
     {
-        mapManager = FindObjectOfType<MapManagerMB>();
+        _mapManager = FindObjectOfType<MapManagerMB>();
         _layerMaskObstacle = LayerMask.GetMask("Obstacle");
     }
 }

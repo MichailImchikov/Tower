@@ -18,4 +18,8 @@ public class MapManagerMB : MonoBehaviour
     {
         return _generalTileMap.GetCenterTileByPosition(position);
     }
+    public List<Vector3Int> GetAreMovment(Vector3 position, int speed)
+    {
+        return _generalTileMap.GetAreaMovement(position, speed);
+    }
 }
