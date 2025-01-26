@@ -41,7 +41,10 @@ TagManager:
   - name: Backgraund
     uniqueID: 2614327217
     locked: 0
-  - name: Wall
+  - name: Movement
+    uniqueID: 779165415
+    locked: 0
+  - name: Obstacle
     uniqueID: 730043829
     locked: 0
   - name: Default
