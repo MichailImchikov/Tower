@@ -12,12 +12,16 @@ public class PlayerMB : UnitMB
     {
         SetTemperature(StatusUnit.Idle);
     }
+    public override void Init()
+    {
+        RegisterObserver(FindObjectOfType<ChangePointMap>());
+    }
     private void Update()
     {
         if(Input.GetMouseButtonDown(0) && statusUnit != StatusUnit.Move)
         {
             var positionClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var validPoint = MapManagerMB.Instance.generalTileMap.newPoint(positionClick);
+            var validPoint = GeneralTileMap.Instance.newPoint(positionClick);
             var RequestToMove = unitData.listValidPointForMove.FirstOrDefault(x => validPoint.PointToMap == x.lastPointToMap);
             if(RequestToMove is not null)
             {
