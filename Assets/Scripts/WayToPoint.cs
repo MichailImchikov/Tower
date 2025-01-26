@@ -11,6 +11,7 @@ public class WayToPoint
     public int SizeWay => pointsWay.Count;
     public List<PointMap> pointsWay { get; set; }// todo return private
     public  int currentPoint = 0;// todo return private
+    public Vector3 lastDelay = Vector3.zero;
     public PointMap GetNextPoint()
     {
         if (pointsWay.Count - 1 <= currentPoint) return null;

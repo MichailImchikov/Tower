@@ -7,9 +7,11 @@ using UnityEngine.Tilemaps;
 public class GeneralTileMap : MonoBehaviour, IObserverAction
 {
     private Tilemap _tilemap;
+    public static GeneralTileMap Instance;
     void Awake()
     {
         _tilemap = GetComponent<Tilemap>();
+        Instance = this;
     }
     public PointMap newPoint(Vector3 pointToWorld) => new(pointToWorld, _tilemap);
     public PointMap newPoint(Vector3Int pointToMap) => new(pointToMap, _tilemap);
@@ -33,8 +35,10 @@ public class GeneralTileMap : MonoBehaviour, IObserverAction
     }
     private void CheckArea(WayToPoint WayToPoint,int speed, List<WayToPoint> area, Vector3Int offset,LayerMask _layerMask)
     {
+        if (WayToPoint.lastDelay == -1 * offset) return;
         var newPosition = newPoint(WayToPoint.lastPointToMap + offset);
         WayToPoint newWayToPoint = new(WayToPoint,newPosition);
+        newWayToPoint.lastDelay = offset;
         if (!_tilemap.HasTile(newWayToPoint.lastPointToMap)) return;
         if (!CheckValidWay(WayToPoint.lastPointToWorld, newWayToPoint.lastPointToWorld, _layerMask)) return;
         var oldWay = area.FirstOrDefault(x => x.lastPointToMap == newWayToPoint.lastPointToMap);

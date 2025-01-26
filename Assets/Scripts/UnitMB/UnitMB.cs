@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 [RequireComponent(typeof(AnimatorController))]
-public class UnitMB : MonoBehaviour
+public abstract class UnitMB : MonoBehaviour
 {
     [SerializeField] protected UnitData unitData = new();
 
@@ -20,25 +20,23 @@ public class UnitMB : MonoBehaviour
         RegisterObserver(GetComponent<AnimatorController>());
         RegisterObserver(GetComponent<UnitMoveMB>());
         unitData.transformUnit = transform;
-
+        Init();
         SetTemperature(StatusUnit.Idle);
     }
+    public abstract void Init();
     public void RegisterObserver(IObserverAction observer)
     {
         listObserversAction.Add(observer);
     }
-
     public void RemoveObserver(IObserverAction observer)
     {
         listObserversAction.Remove(observer);
     }
-
     public void SetTemperature(StatusUnit temp)
     {
         statusUnit = temp;
         NotifyObservers();
     }
-
     private void NotifyObservers()
     {
         foreach (var observer in listObserversAction)
