@@ -50,9 +50,12 @@ public class UnitData
 {
     [HideInInspector] public Transform transformUnit;
     [HideInInspector] public LayerMask _layerMaskObstacle;
-    [HideInInspector] public List<WayToPoint> listValidPointForMove = new();
+    [HideInInspector] public Pathfinder _pathfinder;
+    //[HideInInspector] public List<WayToPoint> listValidPointForMove = new();
+    [HideInInspector] public RangeArea Range_Area;
     [HideInInspector] public GeneralTileMap _generalTileMap;
-    [HideInInspector] public WayToPoint _wayToPoint;
+    [HideInInspector] public PointMap _pointMap;
+    //[HideInInspector] public WayToPoint _wayToPoint;
     public int MaxCellMove = 3;
     public float Speed = 1;
 }

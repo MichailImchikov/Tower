@@ -7,7 +7,8 @@ using UnityEngine;
 public class UnitMoveMB : MonoBehaviour, IObserverAction
 {
     private bool isMoving;
-    private WayToPoint targetWay ;
+    private List<PointMap> targetWay;
+    private int currentIndexPoint;
     private PointMap nextPoint;
     private float Speed;
     private void Update()
@@ -18,15 +19,27 @@ public class UnitMoveMB : MonoBehaviour, IObserverAction
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.PointToWorld, Speed * Time.deltaTime);
             else
             {
-                nextPoint = targetWay.GetNextPoint();
-                if(nextPoint is null)
+                if (currentIndexPoint <= targetWay.Count - 1)
+                {
+                    nextPoint = targetWay[currentIndexPoint];
+                    var diraction = nextPoint.PointToWorld - transform.position;
+                    if (diraction.x > 0) transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe
+                    else transform.GetChild(0).localScale = new Vector3(1, 1, 1);
+                    currentIndexPoint++;
+                }
+                else
                 {
                     EndMove();
-                    return;
                 }
-                var diraction = nextPoint.PointToWorld - transform.position;
-                if (diraction.x > 0) transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe
-                else transform.GetChild(0).localScale = new Vector3(1, 1, 1);
+                //nextPoint = targetWay.GetNextPoint();
+                //if (nextPoint is null)
+                //{
+                //    EndMove();
+                //    return;
+                //}
+                //var diraction = nextPoint.PointToWorld - transform.position;
+                //if (diraction.x > 0) transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe
+                //else transform.GetChild(0).localScale = new Vector3(1, 1, 1);
             }
         }
     }
@@ -38,12 +51,16 @@ public class UnitMoveMB : MonoBehaviour, IObserverAction
 
     public void UpdateStatus(StatusUnit status, UnitData unitData)
     {
-        if(status == StatusUnit.Move)
+        if (status == StatusUnit.Move)
         {
             Speed = unitData.Speed;
-            targetWay = unitData._wayToPoint;
-            nextPoint = targetWay.GetNextPoint() ;
+            targetWay = unitData._pathfinder.pointMaps;
+            nextPoint = targetWay[0];
+            currentIndexPoint = 0;
+            //targetWay = unitData._wayToPoint;
+            //nextPoint = targetWay.GetNextPoint();
             isMoving = true;
+            //var diraction = targetWay[0].PointToWorld - transform.position;
             var diraction = nextPoint.PointToWorld - transform.position;
             if (diraction.x > 0) transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe
             else transform.GetChild(0).localScale = new Vector3(1, 1, 1);

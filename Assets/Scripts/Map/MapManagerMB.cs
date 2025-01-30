@@ -19,14 +19,14 @@ public class MapManagerMB : MonoBehaviour
         tilesMap.FirstOrDefault(x => x.TryGetComponent<MapAreaMovement>(out mapAreaMovment));
         Instance = this;
     }
-    public List<WayToPoint> GetAreMovement(Vector3 position, int speed, LayerMask layerObstacle)
-    {
-        var area = generalTileMap.GetAreaMovement(position, speed, layerObstacle);
-        //mapAreaMovment.ClearTile();
-        //foreach (var cell in area)
-        //{
-        //    mapAreaMovment.SetTile(TileArea, cell);
-        //}
-        return area;
-    }
+    //public List<WayToPoint> GetAreMovement(Vector3 position, int speed, LayerMask layerObstacle)
+    //{
+    //    //var area = generalTileMap.GetAreaMovement(position, speed, layerObstacle);
+    //    //mapAreaMovment.ClearTile();
+    //    //foreach (var cell in area)
+    //    //{
+    //    //    mapAreaMovment.SetTile(TileArea, cell);
+    //    //}
+    //    //return area;
+    //}
 }

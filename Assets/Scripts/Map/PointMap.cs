@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 public class PointMap
 {
     private Vector3 _pointToWorld;
@@ -24,4 +25,10 @@ public class PointMap
         _pointToWorld = clone._pointToWorld;
         _pointToMap = clone._pointToMap;
     }
+    public override bool Equals(object obj)
+    { return (obj != null && obj is PointMap) ? this.Equals(obj as PointMap) : false; }
+    protected bool Equals(PointMap other)
+    { return Equals(_pointToMap, other.PointToMap) && Equals(_pointToWorld, other.PointToWorld); }
+    public override int GetHashCode()
+    { unchecked { return ((_pointToMap != null ? _pointToMap.GetHashCode() : 0) * 397) ^ (_pointToWorld != null ? _pointToWorld.GetHashCode() : 0); } }
 }

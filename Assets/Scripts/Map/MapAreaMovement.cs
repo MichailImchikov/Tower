@@ -11,9 +11,9 @@ public class MapAreaMovement : MonoBehaviour, IObserverAction
     {
         _tilemap = GetComponent<Tilemap>();
     }
-    public void SetTile(WayToPoint way)
+    public void SetTile(Vector3Int position)
     {
-        _tilemap.SetTile(way.lastPointToMap,TileWay);
+        _tilemap.SetTile(position,TileWay);
     }
     private void ClearTile()
     {
@@ -31,10 +31,15 @@ public class MapAreaMovement : MonoBehaviour, IObserverAction
             ClearTile();
         if (status == StatusUnit.Idle)
         {
-            foreach(var way in unitData.listValidPointForMove)
+            var area = unitData.Range_Area.CreateRangeArea(unitData.transformUnit.position);
+            foreach(var item in area)
             {
-                SetTile(way);
+                SetTile(item.Key.PointToMap);
             }
+            //foreach(var way in unitData.listValidPointForMove)
+            //{
+            //    SetTile(way);
+            //}
         }    
     }
 }
