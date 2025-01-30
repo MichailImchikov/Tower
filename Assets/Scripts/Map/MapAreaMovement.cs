@@ -36,10 +36,6 @@ public class MapAreaMovement : MonoBehaviour, IObserverAction
             {
                 SetTile(item.Key.PointToMap);
             }
-            //foreach(var way in unitData.listValidPointForMove)
-            //{
-            //    SetTile(way);
-            //}
         }    
     }
 }
