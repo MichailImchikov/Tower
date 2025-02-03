@@ -8,15 +8,15 @@ using UnityEngine.Tilemaps;
 public class MapManagerMB : MonoBehaviour
 {
     [HideInInspector] public  Tilemap[] tilesMap;
-    [HideInInspector] public GeneralTileMap generalTileMap;
-    [HideInInspector] public MapAreaMovement mapAreaMovment;
+    [HideInInspector] public MapAreaWalking generalTileMap;
+    [HideInInspector] public MapAreaDrawer mapAreaMovment;
     public TileBase TileArea;
     [HideInInspector] public static MapManagerMB Instance;
     private void Awake()
     {
         tilesMap = FindObjectsOfType<Tilemap>();
-        tilesMap.FirstOrDefault(x => x.TryGetComponent<GeneralTileMap>(out generalTileMap));
-        tilesMap.FirstOrDefault(x => x.TryGetComponent<MapAreaMovement>(out mapAreaMovment));
+        tilesMap.FirstOrDefault(x => x.TryGetComponent<MapAreaWalking>(out generalTileMap));
+        tilesMap.FirstOrDefault(x => x.TryGetComponent<MapAreaDrawer>(out mapAreaMovment));
         Instance = this;
     }
     //public List<WayToPoint> GetAreMovement(Vector3 position, int speed, LayerMask layerObstacle)

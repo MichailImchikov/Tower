@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangePointMap : MonoBehaviour, IObserverAction
+public class ChangePointMap : MonoBehaviour/*, IObserverAction*/
 {
     private Transform followPoint1;
     private Transform followPoint2;
@@ -22,21 +22,21 @@ public class ChangePointMap : MonoBehaviour, IObserverAction
         followPoint2.position = validPoint.PointToWorld;
 
     }
-    public void UpdateStatus(StatusUnit status, UnitData unitData)
-    {
-        if (status == StatusUnit.Idle)
-        {
-            isFollow = true;
-            unitTransform = unitData.transformUnit;
-            followPoint1.gameObject.SetActive(true);
-            followPoint2.gameObject.SetActive(true);
-        }
-        else
-        {
-            isFollow = false;
-            followPoint1.gameObject.SetActive(false);
-            followPoint2.gameObject.SetActive(false);
-        }
+    //public void UpdateStatus(StatusUnit status, UnitData unitData)
+    //{
+    //    if (status == StatusUnit.Idle)
+    //    {
+    //        isFollow = true;
+    //        unitTransform = unitData.transformUnit;
+    //        followPoint1.gameObject.SetActive(true);
+    //        followPoint2.gameObject.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        isFollow = false;
+    //        followPoint1.gameObject.SetActive(false);
+    //        followPoint2.gameObject.SetActive(false);
+    //    }
 
-    }
+    //}
 }

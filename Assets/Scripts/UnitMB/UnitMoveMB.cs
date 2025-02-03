@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class UnitMoveMB : MonoBehaviour, IObserverAction
+public class UnitMoveMB : MonoBehaviour/*, IObserverAction*/
 {
     private bool isMoving;
     private List<PointMap> targetWay;
@@ -41,18 +41,18 @@ public class UnitMoveMB : MonoBehaviour, IObserverAction
         isMoving = false;
     }
 
-    public void UpdateStatus(StatusUnit status, UnitData unitData)
-    {
-        if (status == StatusUnit.Move)
-        {
-            Speed = unitData.Speed;
-            targetWay = unitData._pathfinder.pointMaps;
-            nextPoint = targetWay[0];
-            currentIndexPoint = 0;   
-            isMoving = true;   
-            var diraction = nextPoint.PointToWorld - transform.position;   
-            if (diraction.x > 0) transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe  
-            else transform.GetChild(0).localScale = new Vector3(1, 1, 1);
-        }
-    }
+    //public void UpdateStatus(StatusUnit status, UnitData unitData)
+    //{
+    //    if (status == StatusUnit.Move)
+    //    {
+    //        Speed = unitData.Speed;
+    //        targetWay = unitData._pathfinder.pointMaps;
+    //        nextPoint = targetWay[0];
+    //        currentIndexPoint = 0;   
+    //        isMoving = true;   
+    //        var diraction = nextPoint.PointToWorld - transform.position;   
+    //        if (diraction.x > 0) transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe  
+    //        else transform.GetChild(0).localScale = new Vector3(1, 1, 1);
+    //    }
+    //}
 }

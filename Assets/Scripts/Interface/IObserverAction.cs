@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IObserverAction
 {
-    public void UpdateStatus(StatusUnit status, UnitData unitData);
+    //public void UpdateStatus(StatusUnit status, UnitData unitData);
 }
 public enum StatusUnit
 {

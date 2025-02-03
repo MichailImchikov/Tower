@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorController : MonoBehaviour, IObserverAction
+public class AnimatorController : MonoBehaviour
 {
     private Animator _animator;
     void Start()
@@ -17,19 +17,19 @@ public class AnimatorController : MonoBehaviour, IObserverAction
     {
         _animator.SetTrigger($"{state.ToString()}");
     }
-    public void UpdateStatus(StatusUnit status, UnitData unitData)
-    {
-        if (status == StatusUnit.Idle)
-        {
-            Move(false);
-            return;
-        }
-        if (status == StatusUnit.Attack)
-        {
-            Move(true);
-            return;
-        }
-        SetTrigger(status);
-    }
+    //public void UpdateStatus(StatusUnit status, UnitData unitData)
+    //{
+    //    if (status == StatusUnit.Idle)
+    //    {
+    //        Move(false);
+    //        return;
+    //    }
+    //    if (status == StatusUnit.Attack)
+    //    {
+    //        Move(true);
+    //        return;
+    //    }
+    //    SetTrigger(status);
+    //}
 }
 

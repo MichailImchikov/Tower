@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MapAreaMovement : MonoBehaviour, IObserverAction
+public class MapAreaDrawer : MonoBehaviour
 {
     private Tilemap _tilemap;
     public TileBase TileWay;
@@ -25,17 +25,17 @@ public class MapAreaMovement : MonoBehaviour, IObserverAction
 
     }
 
-    public void UpdateStatus(StatusUnit status, UnitData unitData)
-    {
-        if (status == StatusUnit.Move)
-            ClearTile();
-        if (status == StatusUnit.Idle)
-        {
-            var area = unitData.Range_Area.CreateRangeArea(unitData.transformUnit.position);
-            foreach(var item in area)
-            {
-                SetTile(item.Key.PointToMap);
-            }
-        }    
-    }
+    //public void UpdateStatus(StatusUnit status, UnitData unitData)
+    //{
+    //    if (status == StatusUnit.Move)
+    //        ClearTile();
+    //    if (status == StatusUnit.Idle)
+    //    {
+    //        var area = unitData.Range_Area.CreateRangeArea(unitData.transformUnit.position);
+    //        foreach(var item in area)
+    //        {
+    //            SetTile(item.Key.PointToMap);
+    //        }
+    //    }    
+    //}
 }
