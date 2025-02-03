@@ -13,7 +13,8 @@ public class RangeArea
     private Dictionary<PointMap, int> _area;
     public Dictionary<PointMap,int>Area=> _area;
     public Tilemap Tilemap => _tilemap;
-    //private Dictionary<PointMap, int> area;
+    private Dictionary<PointMap, List<PointMap>> obstacle;
+    public Dictionary<PointMap, List<PointMap>> Obstacle => obstacle;
     public RangeArea(Tilemap tilemap, int distance, LayerMask layerMask)
     {
         _distance = distance;
@@ -26,9 +27,9 @@ public class RangeArea
         {
             { new PointMap(position,_tilemap), 0 }
         };
+        obstacle = new Dictionary<PointMap, List<PointMap>>();
         for(int index = 0; index < _distance; index++)
         {
-            //var a = area.Select(x => (x.Value == index));
             var filteredDict = area.Where(pair => pair.Value == index)
                                  .ToDictionary(pair => pair.Key, pair => pair.Value);
             foreach (var item in filteredDict)
@@ -52,6 +53,16 @@ public class RangeArea
         var direction = (endPosition - startPosition).normalized;
         var distance = Vector2.Distance(startPosition, endPosition);
         RaycastHit2D[] hits = Physics2D.RaycastAll(startPosition, direction, distance, _layerMask);
+        if (hits.Length > 0)
+        {
+            if (obstacle.ContainsKey(new PointMap(startPosition,_tilemap))) 
+                obstacle[new PointMap(startPosition, _tilemap)].Add(new PointMap(endPosition, _tilemap));
+            else
+            {
+                obstacle.Add(new PointMap(startPosition, _tilemap), new List<PointMap>());
+                obstacle[new PointMap(startPosition, _tilemap)].Add(new PointMap(endPosition, _tilemap));
+            }
+        }
         return hits.Length == 0;
     }
 }

@@ -14,51 +14,38 @@ public class Pathfinder
     {
         _area = area;
     }
-    public List<PointMap> CreatePath(Vector3 startPosition, Vector3 endPosition, Tilemap tilemap)
+    private void CheakObstacleOnMyWay(UnitData unitData, int index, Vector3 direction, ref Vector3 endPos)
+    {
+        if (rangeArea.ContainsKey(new PointMap(endPos + direction, unitData.Range_Area.Tilemap)))
+        {
+            if (rangeArea[new PointMap(endPos + direction, unitData.Range_Area.Tilemap)] == index - 1)
+            {
+                if (unitData.Range_Area.Obstacle.ContainsKey(new PointMap(endPos + direction, unitData.Range_Area.Tilemap)))
+                {
+                    if (!unitData.Range_Area.Obstacle[new PointMap(endPos + direction, unitData.Range_Area.Tilemap)].Contains(new PointMap(endPos, unitData.Range_Area.Tilemap))) endPos = endPos + direction;
+                }
+                else endPos = endPos + direction;
+            }
+        }
+    }
+    public List<PointMap> CreatePath(Vector3 endPosition, UnitData unitData)
     {
         Vector3 endPos = endPosition;
         int index;
+        Tilemap tilemap= unitData.Range_Area.Tilemap;
         _points = new List<PointMap>
         {
-            new PointMap(endPosition, tilemap)
+            new PointMap(endPos, tilemap)
         };
-        rangeArea = _area.CreateRangeArea(startPosition);
+        rangeArea = unitData.Range_Area.Area;
         do
         {
             var position = new PointMap(endPos, tilemap);
             index = rangeArea[position];
-            if (rangeArea.ContainsKey(new PointMap(endPos + Vector3.right, tilemap)))
-            {
-                if (rangeArea[new PointMap(endPos + Vector3.right, tilemap)] == index-1)
-                {
-                    endPos = endPos + Vector3.right;
-                    //break;
-                }
-            }
-            if(rangeArea.ContainsKey(new PointMap(endPos + Vector3.left, tilemap)))
-            {
-                if (rangeArea[new PointMap(endPos + Vector3.left, tilemap)] == index-1)
-                {
-                    endPos = endPos + Vector3.left;
-                    //break;
-                }
-            }
-            if(rangeArea.ContainsKey(new PointMap(endPos + Vector3.up, tilemap)))
-            {
-                if (rangeArea[new PointMap(endPos + Vector3.up, tilemap)] == index - 1)
-                {
-                    endPos = endPos + Vector3.up;
-                    //break;
-                }
-            }
-            if(rangeArea.ContainsKey(new PointMap(endPos + Vector3.down, tilemap)))
-            {
-                if (rangeArea[new PointMap(endPos + Vector3.down, tilemap)] == index - 1)
-                {
-                    endPos = endPos + Vector3.down;
-                   //break;
-                }
-            }
+            CheakObstacleOnMyWay(unitData, index, Vector3.right, ref endPos);
+            CheakObstacleOnMyWay(unitData, index, Vector3.left, ref endPos);
+            CheakObstacleOnMyWay(unitData, index, Vector3.up, ref endPos);
+            CheakObstacleOnMyWay(unitData, index, Vector3.down, ref endPos);
             _points.Add(new PointMap(endPos, tilemap));
         } while (index != 1);
         _points.Reverse();
