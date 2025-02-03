@@ -13,23 +13,5 @@ public class AnimatorController : MonoBehaviour
     {
         _animator.SetBool("Move", flag);
     }
-    private void SetTrigger(StatusUnit state)
-    {
-        _animator.SetTrigger($"{state.ToString()}");
-    }
-    //public void UpdateStatus(StatusUnit status, UnitData unitData)
-    //{
-    //    if (status == StatusUnit.Idle)
-    //    {
-    //        Move(false);
-    //        return;
-    //    }
-    //    if (status == StatusUnit.Attack)
-    //    {
-    //        Move(true);
-    //        return;
-    //    }
-    //    SetTrigger(status);
-    //}
 }
 

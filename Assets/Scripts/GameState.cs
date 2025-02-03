@@ -2,12 +2,16 @@ using Leopotam.EcsLite;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public class GameState 
+public class GameState
 {
     public static GameState Instance;
-    private List<Config> Configs;
     public EcsWorld world;
+
+    private List<Config> Configs;
+    private Tilemap tilemapWalking;
+    public Tilemap TilemapWalking { set => tilemapWalking = value; }
     public GameState()
     {
         Instance = this;
@@ -25,5 +29,9 @@ public class GameState
         }
 
         return null;
+    }
+    public PointMap GetNewPoint(Vector3 position)
+    {
+        return new PointMap(position, tilemapWalking);
     }
 }

@@ -2,6 +2,6 @@ using UnityEngine;
 
 namespace Client {
     struct TransformComponent {
-        public Transform transform;
+        public Transform Transform;
     }
 }

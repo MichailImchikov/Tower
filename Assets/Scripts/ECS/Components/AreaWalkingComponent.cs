@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 namespace Client {
     struct AreaWalkingComponent {
-        public List<PointMap> areaWalking;
+        public Dictionary<PointMap, int> areaWalking;
+        public Dictionary<PointMap, List<PointMap>> obstacles;
     }
 }

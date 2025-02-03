@@ -22,7 +22,7 @@ namespace Client {
                 }
                 _playerPool.Value.Add(entityNewPlayer);
                 ref var transformComp = ref _transformPool.Value.Get(entityNewPlayer);
-                Camera.main.transform.SetParent(transformComp.transform,false);
+                Camera.main.transform.SetParent(transformComp.Transform,false);
             }
         }
     }

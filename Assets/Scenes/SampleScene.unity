@@ -14438,7 +14438,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6644944588161500795, guid: 4be821d0b78ad5043985b57b738e951b, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6644944588469475088, guid: 4be821d0b78ad5043985b57b738e951b, type: 3}
       propertyPath: m_SortingLayer
@@ -14658,10 +14658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40981fa38033e1046be4d6a1dbb79c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilesMap: []
-  generalTileMap: {fileID: 0}
-  mapAreaMovment: {fileID: 0}
-  TileArea: {fileID: 11400000, guid: 7c6fe08b60eb24740bd8da089c78bd59, type: 2}
 --- !u!4 &547380495 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7947911505737750448, guid: d925f1d26bd95904886e446c97ec33c3, type: 3}
