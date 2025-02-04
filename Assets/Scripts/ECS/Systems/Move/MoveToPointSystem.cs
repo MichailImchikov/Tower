@@ -31,6 +31,7 @@ namespace Client {
                     _areaWalkingPool.Value.Add(entity);
                     _drawAreaWalkingPool.Value.Add(entity);
                     _moveToPointPool.Value.Del(entity);
+
                 }
             }
         }

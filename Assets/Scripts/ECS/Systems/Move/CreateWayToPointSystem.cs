@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 namespace Client {
     sealed class CreateWayToPointSystem : IEcsRunSystem
     {
-        readonly EcsFilterInject<Inc<CreateWayToPointEvent, AreaWalkingComponent>> _filter;
+        readonly EcsFilterInject<Inc<CreateWayToPointEvent, AreaWalkingComponent>,Exc<MoveToPointComponent>> _filter;
         readonly EcsPoolInject<CreateWayToPointEvent> _createWayToPointPool;
         readonly EcsPoolInject<AreaWalkingComponent> _areWalkingPool;
         readonly EcsPoolInject<MoveToPointComponent> _moveToPointPool;
@@ -38,6 +38,7 @@ namespace Client {
                 ref var moveToPointComp = ref _moveToPointPool.Value.Add(entity);
                 moveToPointComp.WayToPoint = _points;
                 moveToPointComp.IndexCurrentPoint = 0;
+                _areWalkingPool.Value.Del(entity);
             }
         }
         private void CheakObstacleOnMyWay( int index, Vector3 direction, ref Vector3 endPos)
