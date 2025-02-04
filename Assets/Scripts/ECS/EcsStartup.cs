@@ -18,20 +18,20 @@ namespace Client {
             _state.world = _world;
             _systems = new EcsSystems (_world, _state);
             _systems
-
-
-                .Add(new InitPlayerSystems())
                 .Add(new InitMapSystem())
+                .Add(new InitPlayerSystems())
                 .Add(new InputSystem())
 
+                .Add(new CheckChangePlayerSystem())
                 .Add(new CheckInputForMovementSystem())
                 .DelHere<MouseClickEvent>()
                 .Add(new CreateWayToPointSystem())
                 .DelHere<CreateWayToPointEvent>()
                 .Add(new MoveToPointSystem())
 
-                .Add(new ClearMapDrawerSystem())
                 .Add(new ChangePlayerSystems())
+
+                .Add(new ClearMapDrawerSystem())
                 .Add(new CreateAreaWalkingSystem())
                 .Add(new DrawAreaWalkingSystem())
                 .DelHere<ChangePlayerEvent>()

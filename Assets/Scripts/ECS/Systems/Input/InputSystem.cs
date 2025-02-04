@@ -12,7 +12,8 @@ namespace Client {
             if(Input.GetMouseButtonUp(0))
             {
                 ref var mouseClickComp = ref _mouseClickPool.Value.Add(_world.Value.NewEntity());
-                mouseClickComp.positionClick = Camera.main.ScreenToWorldPoint(Input.mousePosition); ;
+                var worldPositionClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mouseClickComp.positionClick = GameState.Instance.GetNewPoint(worldPositionClick); 
             }
         }
     }

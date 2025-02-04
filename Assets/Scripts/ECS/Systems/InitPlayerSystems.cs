@@ -9,8 +9,7 @@ namespace Client {
         readonly EcsPoolInject<TransformComponent> _transformPool;
         readonly EcsPoolInject<ChangePlayerEvent> _changePlayerPool;
         readonly EcsPoolInject<MoveComponent> _movePool;
-        readonly EcsPoolInject<CreateAreaWalkingEvent> _areaWalkingPool;
-        readonly EcsPoolInject<DrawAreaWalkingEvent> _drawAreaWalkingPool;
+        readonly EcsPoolInject<PointInMapComponent> _pointInMapPool;
         public void Init (IEcsSystems systems) {
             var unitsAtScenes = GameObject.FindObjectsOfType<UnitMB>();
             foreach(var ally in unitsAtScenes)
@@ -22,12 +21,13 @@ namespace Client {
                 transformComp.Transform = ally.transform;
                 ref var moveComponent = ref _movePool.Value.Add(newEntity);
                 moveComponent.MaxCellMove = ally.MaxCellMove;
+                ref var pointInMapComp = ref _pointInMapPool.Value.Add(newEntity);
+                pointInMapComp.pointMap = GameState.Instance.GetNewPoint(transformComp.Transform.position);
             }
             ref var chargePlayerComp = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());
             var randomPlayer = unitsAtScenes[Random.Range(0, unitsAtScenes.Length - 1)];
             chargePlayerComp.newPlayer = _world.Value.PackEntity(randomPlayer.Entity);
-            _areaWalkingPool.Value.Add(randomPlayer.Entity);
-            _drawAreaWalkingPool.Value.Add(randomPlayer.Entity);
+
         }
     }
 }
