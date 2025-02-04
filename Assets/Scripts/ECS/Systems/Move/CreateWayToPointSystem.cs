@@ -10,8 +10,6 @@ namespace Client {
         readonly EcsFilterInject<Inc<CreateWayToPointEvent, AreaWalkingComponent>> _filter;
         readonly EcsPoolInject<CreateWayToPointEvent> _createWayToPointPool;
         readonly EcsPoolInject<AreaWalkingComponent> _areWalkingPool;
-        readonly EcsFilterInject<Inc<MapAreaWalkingComponent>> _filterMap;
-        readonly EcsPoolInject<MapAreaWalkingComponent> _mapAreaWalkingPool;
         readonly EcsPoolInject<MoveToPointComponent> _moveToPointPool;
         private Dictionary<PointMap, int> rangeArea;
         public Dictionary<PointMap, List<PointMap>> obstacles;
@@ -21,8 +19,6 @@ namespace Client {
             {
                 ref var pointMapComp = ref _createWayToPointPool.Value.Get(entity);
                 ref var areaWalkigComp = ref _areWalkingPool.Value.Get(entity);
-                int entityMap = _filterMap.Value.GetRawEntities()[0];
-                var tilemap = _mapAreaWalkingPool.Value.Get(entityMap).tilemap;
                 Vector3 endPos = pointMapComp.pointMap.PointToWorld;
                 int index;
                 List<PointMap> _points = new() { GameState.Instance.GetNewPoint(endPos)};

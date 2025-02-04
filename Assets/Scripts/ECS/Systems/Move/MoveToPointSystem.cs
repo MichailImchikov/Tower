@@ -1,15 +1,17 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Client {
     sealed class MoveToPointSystem : IEcsRunSystem {
-        readonly EcsFilterInject<Inc<MoveToPointComponent, TransformComponent>> _filter;
+        readonly EcsFilterInject<Inc<MoveToPointComponent, TransformComponent,PointInMapComponent>> _filter;
         readonly EcsPoolInject<TransformComponent> _transformPool;
         readonly EcsPoolInject<MoveToPointComponent> _moveToPointPool;
         readonly EcsPoolInject<CreateAreaWalkingEvent> _areaWalkingPool;
         readonly EcsPoolInject<DrawAreaWalkingEvent> _drawAreaWalkingPool;
+        readonly EcsPoolInject<PointInMapComponent> _pointMapComponent;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
             {
@@ -24,6 +26,8 @@ namespace Client {
                 }
                 else if (!moveToPointComp.NextPoint())
                 {
+                    ref var pointMapcomp = ref _pointMapComponent.Value.Get(entity);
+                    pointMapcomp.pointMap = moveToPointComp.WayToPoint.Last();
                     _areaWalkingPool.Value.Add(entity);
                     _drawAreaWalkingPool.Value.Add(entity);
                     _moveToPointPool.Value.Del(entity);

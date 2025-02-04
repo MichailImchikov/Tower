@@ -10,6 +10,9 @@ namespace Client {
         readonly EcsWorldInject _world;
         readonly EcsFilterInject<Inc<PlayerComponent>> _filterPlayer;
         readonly EcsPoolInject<TransformComponent> _transformPool;
+        readonly EcsPoolInject<CreateAreaWalkingEvent> _areaWalkingPool;
+        readonly EcsPoolInject<DrawAreaWalkingEvent> _drawAreaWalkingPool;
+        readonly EcsPoolInject<ClearMapDrawerEvent> _clearMapPool;
         public void Run (IEcsSystems systems) {
             foreach (var entity in _filter.Value)
             {
@@ -23,6 +26,9 @@ namespace Client {
                 _playerPool.Value.Add(entityNewPlayer);
                 ref var transformComp = ref _transformPool.Value.Get(entityNewPlayer);
                 Camera.main.transform.SetParent(transformComp.Transform,false);
+                _areaWalkingPool.Value.Add(entityNewPlayer);
+                _drawAreaWalkingPool.Value.Add(entityNewPlayer);
+                _clearMapPool.Value.Add(_world.Value.NewEntity());
             }
         }
     }

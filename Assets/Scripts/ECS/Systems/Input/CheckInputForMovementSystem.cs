@@ -16,7 +16,7 @@ namespace Client {
                 ref var mouseClickComp = ref _mouseClickPool.Value.Get(entityClick);
                 int entityPlayer = _filterPlayer.Value.GetRawEntities()[0];
                 ref var areWalkingComp = ref _areaWalkingPool.Value.Get(entityPlayer);
-                var pointInMapClick = GameState.Instance.GetNewPoint(mouseClickComp.positionClick);
+                var pointInMapClick = mouseClickComp.positionClick;
                 if (areWalkingComp.areaWalking.ContainsKey(pointInMapClick))
                 {
                     ref var createWayToPointComp = ref _createWayToPointEvent.Value.Add(entityPlayer);
