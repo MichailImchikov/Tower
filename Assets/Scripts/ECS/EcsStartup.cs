@@ -37,6 +37,7 @@ namespace Client {
                 .DelHere<ChangePlayerEvent>()
                 .DelHere<CreateAreaWalkingEvent>()
                 .DelHere<DrawAreaWalkingEvent>()
+                .Add(new MovementCircleSystem())
 
 
 #if UNITY_EDITOR
