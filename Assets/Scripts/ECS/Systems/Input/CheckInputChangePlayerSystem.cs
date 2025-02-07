@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    sealed class CheckChangePlayerSystem : IEcsRunSystem
+    sealed class CheckInputChangePlayerSystem : IEcsRunSystem
     {
         readonly EcsFilterInject<Inc<MouseClickEvent>> _filter;
         readonly EcsPoolInject<MouseClickEvent> _mouseClickPool;

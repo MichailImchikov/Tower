@@ -12,6 +12,8 @@ namespace Client {
         readonly EcsPoolInject<CreateAreaWalkingEvent> _areaWalkingPool;
         readonly EcsPoolInject<DrawAreaWalkingEvent> _drawAreaWalkingPool;
         readonly EcsPoolInject<PointInMapComponent> _pointMapComponent;
+        readonly EcsPoolInject<RequestAnimationEvent> _requestAnimationPool;
+        readonly EcsWorldInject _world;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
             {
@@ -28,6 +30,9 @@ namespace Client {
                 {
                     ref var pointMapcomp = ref _pointMapComponent.Value.Get(entity);
                     pointMapcomp.pointMap = moveToPointComp.WayToPoint.Last();
+                    ref var requestAnimation = ref  _requestAnimationPool.Value.Add(_world.Value.NewEntity());
+                    requestAnimation.State = AnimationState.Idle;
+                    requestAnimation.entityPacked = _world.Value.PackEntity(entity);
                     _areaWalkingPool.Value.Add(entity);
                     _drawAreaWalkingPool.Value.Add(entity);
                     _moveToPointPool.Value.Del(entity);

@@ -10,6 +10,7 @@ namespace Client {
         readonly EcsPoolInject<CreateWayToPointEvent> _createWayToPointEvent;
         readonly EcsPoolInject<ClearMapDrawerEvent> _clearMapDrawerPool;
         readonly EcsWorldInject _world;
+        readonly EcsPoolInject<RequestAnimationEvent> _requestAnimationPool;
         public void Run (IEcsSystems systems) {
             foreach(var entityClick in _filterClick.Value)
             {
@@ -23,6 +24,9 @@ namespace Client {
                     {
                         ref var createWayToPointComp = ref _createWayToPointEvent.Value.Add(entityPlayer);
                         createWayToPointComp.pointMap = pointInMapClick;
+                        ref var requestAnimationEvent = ref _requestAnimationPool.Value.Add(_world.Value.NewEntity());
+                        requestAnimationEvent.entityPacked = _world.Value.PackEntity(entityPlayer);
+                        requestAnimationEvent.State = AnimationState.Move;
                         _clearMapDrawerPool.Value.Add(_world.Value.NewEntity());
                         _mouseClickPool.Value.Del(entityClick);
                     }
