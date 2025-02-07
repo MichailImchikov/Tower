@@ -8,8 +8,10 @@ namespace Client {
         readonly EcsWorldInject _world;
         readonly EcsPoolInject<MapAreaDrawerComponent> _mapDrawerPool;
         readonly EcsPoolInject<MapAreaWalkingComponent> _mapWalkingPool;
+        readonly EcsPoolInject<TransformCircleComponent> _transformCircle;
         public void Init (IEcsSystems systems) 
         {
+            var TransformCircle = GameObject.FindObjectOfType<CircleMB>();
             var TileMapDrawer = GameObject.FindObjectOfType<MapAreaDrawer>();
             var TileMapWalking = GameObject.FindObjectOfType<MapAreaWalking>();
             var entityMap = _world.Value.NewEntity();
@@ -21,6 +23,10 @@ namespace Client {
             ref var wolkingComp = ref _mapWalkingPool.Value.Add(entityMap);
             wolkingComp.tilemap = TileMapWalking.GetComponent<Tilemap>();
             GameState.Instance.TilemapWalking = wolkingComp.tilemap;
+
+            ref var transformCircleComp= ref _transformCircle.Value.Add(entityMap);
+            transformCircleComp.transform = TransformCircle.transform;
+            
         }
     }
 }
