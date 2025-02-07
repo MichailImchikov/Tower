@@ -22,8 +22,12 @@ namespace Client {
                 .Add(new InitPlayerSystems())
                 .Add(new InputSystem())
 
-                .Add(new CheckChangePlayerSystem())
+                .Add(new CheckInputChangePlayerSystem())
                 .Add(new CheckInputForMovementSystem())
+
+                .Add(new ChangeAnimationSystem())
+                .DelHere<RequestAnimationEvent>()
+
                 .DelHere<MouseClickEvent>()
                 .Add(new CreateWayToPointSystem())
                 .DelHere<CreateWayToPointEvent>()

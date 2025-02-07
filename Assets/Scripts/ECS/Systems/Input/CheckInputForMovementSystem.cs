@@ -10,21 +10,27 @@ namespace Client {
         readonly EcsPoolInject<CreateWayToPointEvent> _createWayToPointEvent;
         readonly EcsPoolInject<ClearMapDrawerEvent> _clearMapDrawerPool;
         readonly EcsWorldInject _world;
+        readonly EcsPoolInject<RequestAnimationEvent> _requestAnimationPool;
         public void Run (IEcsSystems systems) {
             foreach(var entityClick in _filterClick.Value)
             {
                 ref var mouseClickComp = ref _mouseClickPool.Value.Get(entityClick);
-                int entityPlayer = _filterPlayer.Value.GetRawEntities()[0];
-                ref var areWalkingComp = ref _areaWalkingPool.Value.Get(entityPlayer);
-                var pointInMapClick = mouseClickComp.positionClick;
-                if (areWalkingComp.areaWalking.ContainsKey(pointInMapClick))
+                //int entityPlayer = _filterPlayer.Value.GetRawEntities()[0];
+                foreach(var entityPlayer in _filterPlayer.Value)
                 {
-                    ref var createWayToPointComp = ref _createWayToPointEvent.Value.Add(entityPlayer);
-                    createWayToPointComp.pointMap = pointInMapClick;
-                    _clearMapDrawerPool.Value.Add(_world.Value.NewEntity());
-                    _mouseClickPool.Value.Del(entityClick);
+                    ref var areWalkingComp = ref _areaWalkingPool.Value.Get(entityPlayer);
+                    var pointInMapClick = mouseClickComp.positionClick;
+                    if (areWalkingComp.areaWalking.ContainsKey(pointInMapClick))
+                    {
+                        ref var createWayToPointComp = ref _createWayToPointEvent.Value.Add(entityPlayer);
+                        createWayToPointComp.pointMap = pointInMapClick;
+                        ref var requestAnimationEvent = ref _requestAnimationPool.Value.Add(_world.Value.NewEntity());
+                        requestAnimationEvent.entityPacked = _world.Value.PackEntity(entityPlayer);
+                        requestAnimationEvent.State = AnimationState.Move;
+                        _clearMapDrawerPool.Value.Add(_world.Value.NewEntity());
+                        _mouseClickPool.Value.Del(entityClick);
+                    }
                 }
-
             }
         }
     }

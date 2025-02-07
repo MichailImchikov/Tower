@@ -15815,7 +15815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
-  MaxCellMove: 5
+  MaxCellMove: 10
 --- !u!1001 &1037497956
 PrefabInstance:
   m_ObjectHideFlags: 0
