@@ -5,23 +5,18 @@ using UnityEngine;
 namespace Client {
     sealed class MovementCircleSystem : IEcsRunSystem {
         readonly EcsFilterInject<Inc<PlayerComponent, AreaWalkingComponent>> _filterPlayer;
-        readonly EcsPoolInject<AreaWalkingComponent> _areaWalkingPool;
-        readonly EcsPoolInject<TransformCircleComponent> _transformCircle;
-        private Vector3 mousePosition;
-        //readonly EcsWorldInject _world;
+        readonly EcsPoolInject<CircleTransformComponent> _transformPool;
+        readonly EcsFilterInject<Inc<CircleTransformComponent>> _filterMap;
+
         public void Run (IEcsSystems systems) {
-            SetPosition();
-            foreach (var entity in _filterPlayer.Value)
-            {
-                ref var transformComp=ref _transformCircle.Value.Get(entity);
-                ref var areaWalkingComp = ref _areaWalkingPool.Value.Get(entity);
-                transformComp.transform.position = mousePosition;
-            }
             
-        }
-        private void SetPosition()
-        {
-            mousePosition = Input.mousePosition;
+            foreach (var entity in _filterMap.Value)
+            {
+                ref var transformComp=ref _transformPool.Value.Get(entity);
+                transformComp.Transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var worldPositionClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                transformComp.Transform.position = GameState.Instance.GetNewPoint(worldPositionClick).PointToWorld;
+            }
         }
     }
 }

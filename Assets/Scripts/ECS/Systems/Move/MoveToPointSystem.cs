@@ -19,8 +19,9 @@ namespace Client {
             {
                 ref var transformComp = ref _transformPool.Value.Get(entity);
                 ref var moveToPointComp = ref _moveToPointPool.Value.Get(entity);
-                if (Vector3.Distance(transformComp.Transform.position, moveToPointComp.CurrentPoint().PointToWorld) > 0.001f)
+                if (transformComp.Transform.position != moveToPointComp.CurrentPoint().PointToWorld)
                 {
+
                     transformComp.Transform.position = Vector3.MoveTowards(transformComp.Transform.position, moveToPointComp.CurrentPoint().PointToWorld, 3f * Time.deltaTime);
                     
                 }
@@ -34,12 +35,11 @@ namespace Client {
                     _areaWalkingPool.Value.Add(entity);
                     _drawAreaWalkingPool.Value.Add(entity);
                     _moveToPointPool.Value.Del(entity);
-
                 }
                 else
                 {
                     var diraction = moveToPointComp.CurrentPoint().PointToWorld - transformComp.Transform.position;
-                    if (diraction.y != 0) break;
+                    if (diraction.y != 0) continue;
                     if (diraction.x > 0) transformComp.Transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe
                     else transformComp.Transform.GetChild(0).localScale = new Vector3(1, 1, 1);
                 }

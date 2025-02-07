@@ -21,7 +21,6 @@ namespace Client {
                 .Add(new InitMapSystem())
                 .Add(new InitPlayerSystems())
                 .Add(new InputSystem())
-
                 .Add(new CheckInputChangePlayerSystem())
                 .Add(new CheckInputForMovementSystem())
 
@@ -42,7 +41,6 @@ namespace Client {
                 .DelHere<CreateAreaWalkingEvent>()
                 .DelHere<DrawAreaWalkingEvent>()
                 .Add(new MovementCircleSystem())
-
 
 #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())

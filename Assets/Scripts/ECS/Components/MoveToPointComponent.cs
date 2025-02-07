@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Client {
     struct MoveToPointComponent {
@@ -10,10 +11,12 @@ namespace Client {
         }
         public bool NextPoint()
         {
+
             IndexCurrentPoint++;
             if (IndexCurrentPoint <= WayToPoint.Count - 1)
                 return true;
             return false;
         }
+        
     }
 }

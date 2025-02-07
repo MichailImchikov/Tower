@@ -4,10 +4,5 @@ using UnityEngine;
 
 public class CircleMB : MonoBehaviour
 {
-    //[HideInInspector] public int Entity;
-    //private void Start()
-    //{
-
-    //}
 
 }
