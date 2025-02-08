@@ -10,8 +10,9 @@ namespace Client
 {
     sealed class CheckInputChangePlayerSystem : IEcsRunSystem
     {
-        readonly EcsFilterInject<Inc<MouseClickEvent>> _filter;
-        readonly EcsPoolInject<MouseClickEvent> _mouseClickPool;
+        readonly EcsFilterInject<Inc<MouseClickUpEvent,MousePositionComponent>,Exc<MouseClampComponent>> _filter;
+        readonly EcsPoolInject<MousePositionComponent> _mousePositionPool;
+        readonly EcsPoolInject<MouseClickUpEvent> _mouseClickUpPool;
         readonly EcsPoolInject<ChangePlayerEvent> _changePlayerPool;
         readonly EcsFilterInject<Inc<AllyComponent,PointInMapComponent>> _filterAlly;
         readonly EcsPoolInject<PointInMapComponent> _pointMapPool;
@@ -20,15 +21,15 @@ namespace Client
         {
             foreach(var entity in _filter.Value)
             {
-                ref var clickComponent = ref _mouseClickPool.Value.Get(entity);
+                ref var mousePositionComponent = ref _mousePositionPool.Value.Get(entity);
                 foreach(var entityAlly in _filterAlly.Value)
                 {
                     ref var pointOnMap = ref _pointMapPool.Value.Get(entityAlly);
-                    if(pointOnMap.pointMap.PointToMap == clickComponent.positionClick.PointToMap)
+                    if(pointOnMap.pointMap.PointToMap == mousePositionComponent.pointMap.PointToMap)
                     {
                         ref var changePlayer = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());
                         changePlayer.newPlayer = _world.Value.PackEntity(entityAlly);
-                        _mouseClickPool.Value.Del(entity);
+                        _mouseClickUpPool.Value.Del(entity);
                         break;
                     }    
                 }
