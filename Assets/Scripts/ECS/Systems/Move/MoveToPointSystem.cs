@@ -13,6 +13,7 @@ namespace Client {
         readonly EcsPoolInject<DrawAreaWalkingEvent> _drawAreaWalkingPool;
         readonly EcsPoolInject<PointInMapComponent> _pointMapComponent;
         readonly EcsPoolInject<RequestAnimationEvent> _requestAnimationPool;
+        readonly EcsPoolInject<PlayerComponent> _playerPool;
         readonly EcsWorldInject _world;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
@@ -32,9 +33,10 @@ namespace Client {
                     ref var requestAnimation = ref  _requestAnimationPool.Value.Add(_world.Value.NewEntity());
                     requestAnimation.State = AnimationState.Idle;
                     requestAnimation.entityPacked = _world.Value.PackEntity(entity);
+                    _moveToPointPool.Value.Del(entity);
+                    if (!_playerPool.Value.Has(entity))continue;
                     _areaWalkingPool.Value.Add(entity);
                     _drawAreaWalkingPool.Value.Add(entity);
-                    _moveToPointPool.Value.Del(entity);
                 }
                 else
                 {

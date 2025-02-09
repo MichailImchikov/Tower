@@ -25,7 +25,8 @@ namespace Client {
             GameState.Instance.TilemapWalking = wolkingComp.tilemap;
 
             ref var transformCircleComp= ref _transformPool.Value.Add(entityMap);
-            transformCircleComp.Transform = TransformCircle.transform;
+            transformCircleComp.TransformCursor = TransformCircle.transform.GetChild(0);
+            transformCircleComp.TransformForPlayer = TransformCircle.transform.GetChild(1);
             
         }
     }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Client {
     struct CircleTransformComponent {
-        public Transform Transform;
+        public Transform TransformCursor;
+        public Transform TransformForPlayer;
     }
 }
