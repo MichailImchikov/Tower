@@ -12,6 +12,8 @@ namespace Client {
         readonly EcsPoolInject<ScrollMouseWheelEvent> _scrollMouseWheelPool;
         readonly EcsWorldInject _world;
 
+
+        readonly EcsPoolInject<RequestDamageEvent> _req;
         public void Init(IEcsSystems systems)
         {
             var entityInput = _world.Value.NewEntity();
@@ -32,6 +34,12 @@ namespace Client {
                     _mouseClickDownPool.Value.Add(entity);
                 if (Input.mouseScrollDelta.y != 0)
                     _scrollMouseWheelPool.Value.Add(entity).ScrollSize = Input.mouseScrollDelta.y;
+                if(Input.GetMouseButtonDown(1))
+                {
+                    ref var requestDamage = ref _req.Value.Add(_world.Value.NewEntity());
+                    requestDamage.PointInMap = mousePositionComp.pointMap;
+                    requestDamage.Damage = 10;
+                }
             }
         }
     }

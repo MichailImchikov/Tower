@@ -9,6 +9,7 @@ namespace Client {
     {
         Idle,
         Move,
-        Attack
+        Attack,
+        TakeDamage
     }
 }
