@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Client {
     sealed class TimerMouseClampSystem : IEcsRunSystem {
-        readonly EcsFilterInject<Inc<TimerMouseClampComponent>> _filter;
+        readonly EcsFilterInject<Inc<TimerMouseClampComponent>,Exc<MouseClampComponent>> _filter;
         readonly EcsPoolInject<TimerMouseClampComponent> _timerMousePool;
         readonly EcsPoolInject<MouseClampComponent> _mouseClampComponent;
         public void Run (IEcsSystems systems) {

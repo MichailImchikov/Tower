@@ -13,7 +13,7 @@ namespace Client {
             foreach(var entity in _filterDown.Value)
             {
                 ref var timerMouseClampComp = ref _timerMouseClampPool.Value.Add(entity);
-                timerMouseClampComp.Timer = 0.1f;
+                timerMouseClampComp.Timer = 0.15f;
             }
             foreach(var entity in _filterUp.Value)
             {
