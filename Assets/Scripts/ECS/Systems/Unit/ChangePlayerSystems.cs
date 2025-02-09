@@ -25,7 +25,6 @@ namespace Client {
                 }
                 _playerPool.Value.Add(entityNewPlayer);
                 ref var transformComp = ref _transformPool.Value.Get(entityNewPlayer);
-                Camera.main.transform.SetParent(transformComp.Transform,false);
                 _areaWalkingPool.Value.Add(entityNewPlayer);
                 _drawAreaWalkingPool.Value.Add(entityNewPlayer);
                 _clearMapPool.Value.Add(_world.Value.NewEntity());

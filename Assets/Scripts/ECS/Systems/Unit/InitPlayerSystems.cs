@@ -30,7 +30,7 @@ namespace Client {
             ref var chargePlayerComp = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());
             var randomPlayer = unitsAtScenes[Random.Range(0, unitsAtScenes.Length - 1)];
             chargePlayerComp.newPlayer = _world.Value.PackEntity(randomPlayer.Entity);
-
+            Camera.main.transform.position = randomPlayer.transform.position + Vector3.back;
 
         }
     }
