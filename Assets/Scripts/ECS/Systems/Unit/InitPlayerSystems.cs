@@ -11,6 +11,7 @@ namespace Client {
         readonly EcsPoolInject<MoveComponent> _movePool;
         readonly EcsPoolInject<PointInMapComponent> _pointInMapPool;
         readonly EcsPoolInject<AnimatorComponent> _animatorPool;
+        readonly EcsPoolInject<HealthComponent> _healthPool;
         public void Init (IEcsSystems systems) {
             var unitsAtScenes = GameObject.FindObjectsOfType<UnitMB>();
             foreach(var ally in unitsAtScenes)
@@ -26,6 +27,8 @@ namespace Client {
                 pointInMapComp.pointMap = GameState.Instance.GetNewPoint(transformComp.Transform.position);
                 ref var animatorComponent = ref _animatorPool.Value.Add(newEntity);
                 animatorComponent.Animator = ally.GetComponentInChildren<Animator>();
+                ref var healthPool = ref _healthPool.Value.Add(newEntity);
+                healthPool.Health = ally.Health;
             }
             ref var chargePlayerComp = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());
             var randomPlayer = unitsAtScenes[Random.Range(0, unitsAtScenes.Length - 1)];

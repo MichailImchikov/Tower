@@ -9,6 +9,7 @@ namespace Client {
         EcsSystems _systems;
         GameState _state;
         EcsSystems _inputSystems;
+        EcsSystems _fightSystems;
         private void Awake()
         {
             _state = new GameState();
@@ -19,6 +20,7 @@ namespace Client {
             _state.world = _world;
             _systems = new EcsSystems (_world, _state);
             _inputSystems = new EcsSystems (_world, _state);
+            _fightSystems = new EcsSystems ( _world, _state);
             _systems
                 .Add(new InitMapSystem())
                 .Add(new InitPlayerSystems())
@@ -55,9 +57,15 @@ namespace Client {
                 .Add(new CheckInputChangePlayerSystem())
                 .Add(new CheckInputForMovementSystem())
                 ;
+            _fightSystems
+                .Add(new RequestTakeDamageSystem())
+                .Add(new TakeDamageSystem())
+                .DelHere<TakeDamageEvent>()
+                .DelHere<RequestDamageEvent>()
+                ;
 
-            InjectAllSystems(_systems, _inputSystems);
-            InitAllSystems(_systems, _inputSystems);
+            InjectAllSystems(_systems, _inputSystems,_fightSystems);
+            InitAllSystems(_systems, _inputSystems,_fightSystems);
 
         }
 
@@ -65,6 +73,7 @@ namespace Client {
             // process systems here.
             _systems?.Run ();
             _inputSystems?.Run();
+            _fightSystems?.Run();
         }
 
         void OnDestroy () {
@@ -76,6 +85,11 @@ namespace Client {
             {
                 _inputSystems.Destroy();
                 _inputSystems = null;
+            }           
+            if (_fightSystems != null)
+            {
+                _fightSystems.Destroy();
+                _fightSystems = null;
             }
             if (_world != null) {
                 _world.Destroy ();
