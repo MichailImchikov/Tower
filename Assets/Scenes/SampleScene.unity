@@ -13728,6 +13728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entity: 0
   MaxCellMove: 5
+  Health: 100
 --- !u!4 &388048272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2055102311959635375, guid: 6242b925f1d3e0d44a183102cd3d4c26, type: 3}
@@ -15816,6 +15817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entity: 0
   MaxCellMove: 10
+  Health: 100
 --- !u!1001 &1037497956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24552,7 +24554,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3220510580749785572, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_Name
-      value: Ally3
+      value: Ryan Gosling
       objectReference: {fileID: 0}
     - target: {fileID: 5407899210971094836, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: m_Pivot.x

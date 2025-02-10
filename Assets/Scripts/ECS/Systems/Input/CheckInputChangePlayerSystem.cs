@@ -14,7 +14,7 @@ namespace Client
         readonly EcsPoolInject<MousePositionComponent> _mousePositionPool;
         readonly EcsPoolInject<MouseClickUpEvent> _mouseClickUpPool;
         readonly EcsPoolInject<ChangePlayerEvent> _changePlayerPool;
-        readonly EcsFilterInject<Inc<AllyComponent,PointInMapComponent>> _filterAlly;
+        readonly EcsFilterInject<Inc<AllyComponent,PointInMapComponent>, Exc<DeathComponent>> _filterAlly;
         readonly EcsPoolInject<PointInMapComponent> _pointMapPool;
         readonly EcsWorldInject _world;
         public void Run(IEcsSystems systems)

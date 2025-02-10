@@ -38,7 +38,7 @@ namespace Client {
                 {
                     ref var requestDamage = ref _req.Value.Add(_world.Value.NewEntity());
                     requestDamage.PointInMap = mousePositionComp.pointMap;
-                    requestDamage.Damage = 10;
+                    requestDamage.Damage = 90;
                 }
             }
         }
