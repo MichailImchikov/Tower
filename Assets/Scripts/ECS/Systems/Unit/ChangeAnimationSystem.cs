@@ -14,7 +14,11 @@ namespace Client {
                 if (!requestAnimationComp.entityPacked.Unpack(_world.Value, out int entityUnit)) continue;
                 if (!_animatorPool.Value.Has(entityUnit)) continue;
                 ref var animatorComp = ref _animatorPool.Value.Get(entityUnit);
-                animatorComp.Animator.SetTrigger(requestAnimationComp.State.ToString());
+                if (requestAnimationComp.State == AnimationState.Death)
+                {
+                    animatorComp.Animator.SetBool(AnimationState.Death.ToString(), true);
+                }
+                else animatorComp.Animator.SetTrigger(requestAnimationComp.State.ToString());
             }
         }
     }

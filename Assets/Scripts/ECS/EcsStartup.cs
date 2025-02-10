@@ -70,6 +70,8 @@ namespace Client {
             _fightSystems
                 .Add(new RequestTakeDamageSystem())
                 .Add(new TakeDamageSystem())
+                .Add(new DeathSystem())
+                .DelHere<DeathEvent>()
                 .DelHere<TakeDamageEvent>()
                 .DelHere<RequestDamageEvent>()
                 ;
