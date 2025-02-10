@@ -10,6 +10,7 @@ public class UnitMB : MonoBehaviour
     [HideInInspector] public int Entity;
     public int MaxCellMove = 5;
     public float Health = 100;
+    public AbilityConfig abilityConfig;
     private void Start()
     {
 

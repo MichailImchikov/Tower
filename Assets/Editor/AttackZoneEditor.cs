@@ -11,15 +11,15 @@ public class AttackZoneEditor : Editor
     {
         zone = (AttackZoneConfig)target;
 
-        // Проверка и инициализация матрицы, если она пустая
-        if (zone.matrix == null || zone.matrix.Count == 0)
-        {
-            zone.matrix = new List<AttackZoneConfig.MatrixRow>
-            {
-                new AttackZoneConfig.MatrixRow { values = new List<int> { 0, 0 } },
-                new AttackZoneConfig.MatrixRow { values = new List<int> { 0, 0 } }
-            };
-        }
+        //// Проверка и инициализация матрицы, если она пустая
+        //if (zone.attackZone.matrix == null || zone.attackZone.matrix.Count == 0)
+        //{
+        //    zone.attackZone.matrix = new List<AttackZoneConfig.MatrixRow>
+        //    {
+        //        new AttackZoneConfig.MatrixRow { values = new List<int> { 0, 0 } },
+        //        new AttackZoneConfig.MatrixRow { values = new List<int> { 0, 0 } }
+        //    };
+        //}
     }
 
     public override void OnInspectorGUI()
@@ -28,17 +28,17 @@ public class AttackZoneEditor : Editor
 
         // Отображаем матрицу
         EditorGUILayout.LabelField("Matrix", EditorStyles.boldLabel);
-        for (int i = 0; i < zone.matrix.Count; i++)
+        for (int i = 0; i < zone.attackZone.matrix.Count; i++)
         {
-            if (zone.matrix[i] == null)
+            if (zone.attackZone.matrix[i] == null)
             {
-                zone.matrix[i] = new AttackZoneConfig.MatrixRow { values = new List<int>() };
+                zone.attackZone.matrix[i] = new MatrixRow { values = new List<int>() };
             }
 
             EditorGUILayout.BeginHorizontal();
-            for (int j = 0; j < zone.matrix[i].values.Count; j++)
+            for (int j = 0; j < zone.attackZone.matrix[i].values.Count; j++)
             {
-                zone.matrix[i].values[j] = EditorGUILayout.IntField(zone.matrix[i].values[j], GUILayout.Width(50));
+                zone.attackZone.matrix[i].values[j] = EditorGUILayout.IntField(zone.attackZone.matrix[i].values[j], GUILayout.Width(50));
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -59,11 +59,11 @@ public class AttackZoneEditor : Editor
         // Кнопка для поворота матрицы
         if (GUILayout.Button("Rotate Matrix"))
         {
-            zone.RotateMatrix();
+            zone.attackZone.RotateMatrix();
             EditorUtility.SetDirty(zone); // Помечаем объект как измененный
         }
 
-        if (GUILayout.Button("Remove Row") && zone.matrix.Count > 1)
+        if (GUILayout.Button("Remove Row") && zone.attackZone.matrix.Count > 1)
         {
             RemoveRow();
         }
@@ -82,14 +82,14 @@ public class AttackZoneEditor : Editor
 
     private int GetColumnCount()
     {
-        return zone.matrix.Count > 0 ? zone.matrix[0].values.Count : 0;
+        return zone.attackZone.matrix.Count > 0 ? zone.attackZone.matrix[0].values.Count : 0;
     }
 
     private void RemoveRow()
     {
-        if (zone.matrix.Count > 1)
+        if (zone.attackZone.matrix.Count > 1)
         {
-            zone.matrix.RemoveAt(zone.matrix.Count - 1);
+            zone.attackZone.matrix.RemoveAt(zone.attackZone.matrix.Count - 1);
         }
     }
 
@@ -98,7 +98,7 @@ public class AttackZoneEditor : Editor
         int columnCount = GetColumnCount();
         if (columnCount > 1)
         {
-            foreach (var row in zone.matrix)
+            foreach (var row in zone.attackZone.matrix)
             {
                 if (row != null && row.values.Count > 0)
                 {
@@ -111,13 +111,14 @@ public class AttackZoneEditor : Editor
     private void AddRow()
     {
         int columnCount = GetColumnCount();
-        var newRow = new AttackZoneConfig.MatrixRow { values = new List<int>(new int[columnCount]) };
-        zone.matrix.Add(newRow);
+        var newRow = new MatrixRow { values = new List<int>(new int[columnCount]) };
+        zone.attackZone.matrix.Add(newRow);
     }
+
 
     private void AddColumn()
     {
-        foreach (var row in zone.matrix)
+        foreach (var row in zone.attackZone.matrix)
         {
             if (row != null)
             {

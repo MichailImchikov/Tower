@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Attck
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300018, guid: a07735877a3bd644094331b137b71878, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.5882353}
   m_Transform:
     e00: 1
     e01: 0

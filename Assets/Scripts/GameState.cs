@@ -34,4 +34,8 @@ public class GameState
     {
         return new PointMap(position, tilemapWalking);
     }
+    public PointMap GetNewPoint(Vector3Int position)
+    {
+        return new PointMap(position, tilemapWalking);
+    }
 }

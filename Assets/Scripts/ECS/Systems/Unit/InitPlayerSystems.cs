@@ -12,6 +12,7 @@ namespace Client {
         readonly EcsPoolInject<PointInMapComponent> _pointInMapPool;
         readonly EcsPoolInject<AnimatorComponent> _animatorPool;
         readonly EcsPoolInject<HealthComponent> _healthPool;
+        readonly EcsPoolInject<InitAbilityEvent> _initAbility;
         public void Init (IEcsSystems systems) {
             var unitsAtScenes = GameObject.FindObjectsOfType<UnitMB>();
             foreach(var ally in unitsAtScenes)
@@ -29,6 +30,12 @@ namespace Client {
                 animatorComponent.Animator = ally.GetComponentInChildren<Animator>();
                 ref var healthPool = ref _healthPool.Value.Add(newEntity);
                 healthPool.Health = ally.Health;
+                if(ally.abilityConfig is not null)
+                {
+                    ref var initAbil = ref _initAbility.Value.Add(_world.Value.NewEntity());
+                    initAbil.ability = ally.abilityConfig.ability;
+                    initAbil.packedEntityOwner = _world.Value.PackEntity(newEntity);
+                }
             }
             ref var chargePlayerComp = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());
             var randomPlayer = unitsAtScenes[Random.Range(0, unitsAtScenes.Length - 1)];

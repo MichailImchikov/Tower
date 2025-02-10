@@ -19,6 +19,7 @@ namespace Client
         readonly EcsWorldInject _world;
         public void Run(IEcsSystems systems)
         {
+
             foreach(var entity in _filter.Value)
             {
                 ref var mousePositionComponent = ref _mousePositionPool.Value.Get(entity);

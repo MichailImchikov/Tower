@@ -12,6 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1aeb20408340e41b9d245da2fccfeb, type: 3}
   m_Name: NewZone
   m_EditorClassIdentifier: 
-  matrix:
-  - values: 010000000200000001000000
-  - values: 000000000100000000000000

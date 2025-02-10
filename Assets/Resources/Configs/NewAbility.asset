@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27b8f15762e78a4084216beade28582, type: 3}
   m_Name: NewAbility
   m_EditorClassIdentifier: 
-  Damage: 0
-  Cost: 0
-  TileView: {fileID: 0}
-  AttackZoneConfig: {fileID: 11400000, guid: 53aeaccccac153d44bb0850afdc91211, type: 2}
+  ability:
+    Damage: 10
+    Cost: 0
+    TileView: {fileID: 11400000, guid: 9f3878d3d90a3da48b763071d9dfd676, type: 2}
+    AttackZoneConfig: {fileID: 0}

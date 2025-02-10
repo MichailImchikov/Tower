@@ -7,8 +7,5 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "NewAbility", menuName = "Configs/Ability/NewAbility")]
 public class AbilityConfig : Config
 {
-    public float Damage;
-    public float Cost;
-    public TileBase TileView;
-    [SerializeReference] AttackZoneConfig AttackZoneConfig;
+    public Ability ability;
 }
