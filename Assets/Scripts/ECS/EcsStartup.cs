@@ -9,6 +9,7 @@ namespace Client {
         EcsSystems _systems;
         GameState _state;
         EcsSystems _inputSystems;
+        EcsSystems _abilitySystem;
         EcsSystems _fightSystems;
         private void Awake()
         {
@@ -21,6 +22,7 @@ namespace Client {
             _systems = new EcsSystems (_world, _state);
             _inputSystems = new EcsSystems (_world, _state);
             _fightSystems = new EcsSystems ( _world, _state);
+            _abilitySystem = new EcsSystems ( _world, _state);
             _systems
                 .Add(new InitMapSystem())
                 .Add(new InitPlayerSystems())
@@ -57,6 +59,14 @@ namespace Client {
                 .Add(new CheckInputChangePlayerSystem())
                 .Add(new CheckInputForMovementSystem())
                 ;
+            _abilitySystem
+                .Add(new InitAbilitySystem())
+                .Add(new InitAttackZoneSystem())
+                .Add(new InvokeAbilitySystem())
+                .DelHere<InitAttackZoneEvent>()
+                .DelHere<InitAbilityEvent>()
+                .DelHere<InvokeAbilityEvent>()
+                ;
             _fightSystems
                 .Add(new RequestTakeDamageSystem())
                 .Add(new TakeDamageSystem())
@@ -66,8 +76,8 @@ namespace Client {
                 .DelHere<RequestDamageEvent>()
                 ;
 
-            InjectAllSystems(_systems, _inputSystems,_fightSystems);
-            InitAllSystems(_systems, _inputSystems,_fightSystems);
+            InjectAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem);
+            InitAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem);
 
         }
 
@@ -76,6 +86,7 @@ namespace Client {
             _systems?.Run ();
             _inputSystems?.Run();
             _fightSystems?.Run();
+            _abilitySystem?.Run();
         }
 
         void OnDestroy () {
@@ -92,6 +103,11 @@ namespace Client {
             {
                 _fightSystems.Destroy();
                 _fightSystems = null;
+            }           
+            if (_abilitySystem != null)
+            {
+                _abilitySystem.Destroy();
+                _abilitySystem = null;
             }
             if (_world != null) {
                 _world.Destroy ();
