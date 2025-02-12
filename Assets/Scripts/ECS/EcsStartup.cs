@@ -62,10 +62,12 @@ namespace Client {
             _abilitySystem
                 .Add(new InitAbilitySystem())
                 .Add(new InitAttackZoneSystem())
+                .Add(new DrawAttackZoneSystem())
                 .Add(new InvokeAbilitySystem())
                 .DelHere<InitAttackZoneEvent>()
                 .DelHere<InitAbilityEvent>()
                 .DelHere<InvokeAbilityEvent>()
+                .DelHere<DrawAttackZoneEvent>()
                 ;
             _fightSystems
                 .Add(new RequestTakeDamageSystem())

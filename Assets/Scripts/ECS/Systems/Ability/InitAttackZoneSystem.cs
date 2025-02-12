@@ -9,6 +9,8 @@ namespace Client {
         readonly EcsPoolInject<InitAttackZoneEvent> _initAttackZonePool;
         readonly EcsPoolInject<AttackZoneComponent> _attackZoneComponent;
         readonly EcsPoolInject<AbilityComponent> _abilityComponent;
+        readonly EcsPoolInject<DrawAttackZoneEvent> _drawAttackZonePool;
+        readonly EcsPoolInject<DrawAttackZoneComponent> _drawAttackZoneComp;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
             {
@@ -19,7 +21,6 @@ namespace Client {
                 if (attackZone is null) continue;
                 ref var attackZoneComponent = ref _attackZoneComponent.Value.Add(entity);
                 attackZoneComponent.pointAttack = attackZone;
-                // todo DrawAttackZoneEvent
             }
         }
         private  List<PointMap> GetAttackPoints(AttackZone attackZone, PointMap basePoint)

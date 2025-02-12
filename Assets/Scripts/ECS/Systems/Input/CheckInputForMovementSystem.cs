@@ -4,7 +4,7 @@ using Leopotam.EcsLite.Di;
 namespace Client {
     sealed class CheckInputForMovementSystem : IEcsRunSystem {
         readonly EcsFilterInject<Inc<MouseClickUpEvent,MousePositionComponent>,Exc<MouseClampComponent>> _filterClick;
-        readonly EcsFilterInject<Inc<PlayerComponent, AreaWalkingComponent>> _filterPlayer;
+        readonly EcsFilterInject<Inc<PlayerComponent, AreaWalkingComponent>, Exc<DeathComponent>> _filterPlayer;
         readonly EcsPoolInject<AreaWalkingComponent> _areaWalkingPool;
         readonly EcsPoolInject<MousePositionComponent> _mousePositionPool;
         readonly EcsPoolInject<CreateWayToPointEvent> _createWayToPointEvent;
