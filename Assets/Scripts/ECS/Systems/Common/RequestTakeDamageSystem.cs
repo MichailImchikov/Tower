@@ -8,7 +8,7 @@ namespace Client {
         readonly EcsPoolInject<TakeDamageEvent> _TakeDamagePool;
         readonly EcsPoolInject<PointInMapComponent> _pointMapPool;
         readonly EcsPoolInject<RequestAnimationEvent> _requestAnimationPool;
-        readonly EcsFilterInject<Inc<HealthComponent, PointInMapComponent>, Exc<DeathComponent>> _filterUnit;
+        readonly EcsFilterInject<Inc<HealthComponent, PointInMapComponent>, Exc<DeathStateComponent>> _filterUnit;
         readonly EcsWorldInject _world;
         public void Run (IEcsSystems systems) {
             foreach(var entityEvent in _filterEvent.Value)

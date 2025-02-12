@@ -3,8 +3,8 @@ using Leopotam.EcsLite.Di;
 
 namespace Client {
     sealed class CheckInputForMovementSystem : IEcsRunSystem {
-        readonly EcsFilterInject<Inc<MouseClickUpEvent,MousePositionComponent>,Exc<MouseClampComponent>> _filterClick;
-        readonly EcsFilterInject<Inc<PlayerComponent, AreaWalkingComponent>, Exc<DeathComponent>> _filterPlayer;
+        readonly EcsFilterInject<Inc<MouseClickUpEvent,MousePositionComponent>> _filterClick;
+        readonly EcsFilterInject<Inc<PlayerComponent, AreaWalkingComponent,MoveStateComponent>> _filterPlayer;
         readonly EcsPoolInject<AreaWalkingComponent> _areaWalkingPool;
         readonly EcsPoolInject<MousePositionComponent> _mousePositionPool;
         readonly EcsPoolInject<CreateWayToPointEvent> _createWayToPointEvent;
@@ -16,7 +16,6 @@ namespace Client {
             foreach(var entityClick in _filterClick.Value)
             {
                 ref var mousePositionComp = ref _mousePositionPool.Value.Get(entityClick);
-                //int entityPlayer = _filterPlayer.Value.GetRawEntities()[0];
                 foreach(var entityPlayer in _filterPlayer.Value)
                 {
                     ref var areWalkingComp = ref _areaWalkingPool.Value.Get(entityPlayer);

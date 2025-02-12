@@ -4,7 +4,7 @@ using Leopotam.EcsLite.Di;
 namespace Client {
     sealed class DeathSystem : IEcsRunSystem {
         readonly EcsFilterInject<Inc<DeathEvent>> _filter;
-        readonly EcsPoolInject<DeathComponent> _deathPool;
+        readonly EcsPoolInject<DeathStateComponent> _deathPool;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
             {

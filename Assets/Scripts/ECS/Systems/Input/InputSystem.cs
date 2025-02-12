@@ -12,15 +12,12 @@ namespace Client {
         readonly EcsPoolInject<ScrollMouseWheelEvent> _scrollMouseWheelPool;
         readonly EcsWorldInject _world;
 
-
-        readonly EcsFilterInject<Inc<AbilityComponent>> _filterAbility;
-        readonly EcsPoolInject<AbilityComponent> _attackModePool;
-        readonly EcsPoolInject<InitAttackZoneEvent> _initAttackZonePool;
-        readonly EcsPoolInject<InvokeAbilityEvent> _invokeAttackPool;
-        readonly EcsPoolInject<DrawAttackZoneComponent> _drawAttackZonePool;
-        readonly EcsFilterInject<Inc<PlayerComponent>> _filter;
-        readonly EcsPoolInject<DrawAreaWalkingEvent> _DrawAreaPool;
-        readonly EcsPoolInject<ClearMapDrawerEvent> _ClearAreaPool;
+        readonly EcsPoolInject<ChangeMoveStateEvent> _moveStatePool;
+        readonly EcsPoolInject<ChangeAttackStateEvent> _attakStatePool;
+        readonly EcsFilterInject<Inc<PlayerComponent,AbilityContainer>> _filterPlayer;
+        readonly EcsPoolInject<AbilityContainer> _abilityContainerPool;
+        readonly EcsPoolInject<ChoosingAbilityUseEvent> _chosingAbilityPool;
+        readonly EcsPoolInject<AttackStateComponent> _attackStatePool;
         public void Init(IEcsSystems systems)
         {
             var entityInput = _world.Value.NewEntity();
@@ -41,39 +38,33 @@ namespace Client {
                     _mouseClickDownPool.Value.Add(entity);
                 if (Input.mouseScrollDelta.y != 0)
                     _scrollMouseWheelPool.Value.Add(entity).ScrollSize = Input.mouseScrollDelta.y;
-                if(Input.GetMouseButtonDown(1))
+                // todo Transfer to the UI
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    foreach (var entityAbil in _filterAbility.Value)
+                    foreach(var entityPlayer in _filterPlayer.Value)
                     {
-                        ref var AttackMode = ref _attackModePool.Value.Get(entityAbil);
-                        
-                        if (AttackMode.IsOn)
-                        {
-                            
-                            ref var InitAttack = ref _initAttackZonePool.Value.Add(entityAbil);
-                            InitAttack.pointCenter = mousePositionComp.pointMap;
-                            _invokeAttackPool.Value.Add(entityAbil);
-                        }
+                        _attakStatePool.Value.Add(entityPlayer);
                     }
                 }
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    foreach (var entityAbil in _filterAbility.Value)
+                    foreach (var entityPlayer in _filterPlayer.Value)
                     {
-                        ref var AttackMode = ref _attackModePool.Value.Get(entityAbil);
-                        if (AttackMode.IsOn == true)
-                        {
-                            AttackMode.IsOn = false;
-                            foreach (var entityPlayer in _filter.Value)
-                            {
-                                _DrawAreaPool.Value.Add(entityPlayer);
-                            }
-                        }
-                        else
-                        {
-                            AttackMode.IsOn = true;
-                            _ClearAreaPool.Value.Add(entityAbil);
-                        }
+                        _moveStatePool.Value.Add(entityPlayer);
+                    }
+                }
+                for (int i=0 ; i<=9 ; i++)
+                {
+                    if (!Input.GetKeyDown((KeyCode)(KeyCode.Alpha0 + i))) continue;
+                    foreach (var entityPlayer in _filterPlayer.Value)
+                    {
+                        ref var abilityContainer = ref _abilityContainerPool.Value.Get(entityPlayer);
+                        if (abilityContainer.Abilities.Count < i) continue;
+                        if (!abilityContainer.Abilities[i - 1].Unpack(_world.Value, out int abilityEntity)) continue;
+                        if (!_attackStatePool.Value.Has(entityPlayer)) continue;
+                        ref var choosingAbilityComp = ref _chosingAbilityPool.Value.Add(entityPlayer);
+                        choosingAbilityComp.abilityEntity = _world.Value.PackEntity(abilityEntity);
+                        choosingAbilityComp.ownerAbility = _world.Value.PackEntity(entityPlayer);
                     }
                 }
             }

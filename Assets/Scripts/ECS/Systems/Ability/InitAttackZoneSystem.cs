@@ -5,12 +5,10 @@ using UnityEngine;
 
 namespace Client {
     sealed class InitAttackZoneSystem : IEcsRunSystem {
-        readonly EcsFilterInject<Inc<AbilityComponent, InitAttackZoneEvent>,Exc<AttackZoneComponent>> _filter;
+        readonly EcsFilterInject<Inc<AbilityComponent, InitAttackZoneEvent>> _filter;
         readonly EcsPoolInject<InitAttackZoneEvent> _initAttackZonePool;
         readonly EcsPoolInject<AttackZoneComponent> _attackZoneComponent;
         readonly EcsPoolInject<AbilityComponent> _abilityComponent;
-        readonly EcsPoolInject<DrawAttackZoneEvent> _drawAttackZonePool;
-        readonly EcsPoolInject<DrawAttackZoneComponent> _drawAttackZoneComp;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
             {
@@ -19,8 +17,12 @@ namespace Client {
                 var attackZone = GetAttackPoints(abilityComponent.ability.AttackZoneConfig.attackZone, initPool.pointCenter);
                 attackZone.Add(initPool.pointCenter);
                 if (attackZone is null) continue;
-                ref var attackZoneComponent = ref _attackZoneComponent.Value.Add(entity);
+                if (!_attackZoneComponent.Value.Has(entity)) 
+                    _attackZoneComponent.Value.Add(entity);
+                ref var attackZoneComponent = ref _attackZoneComponent.Value.Get(entity);
                 attackZoneComponent.pointAttack = attackZone;
+                attackZoneComponent.Click = initPool.pointCenter;
+                // todo DrawAttackZoneEvent
             }
         }
         private  List<PointMap> GetAttackPoints(AttackZone attackZone, PointMap basePoint)

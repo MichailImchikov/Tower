@@ -8,7 +8,7 @@ public class GameState
 {
     public static GameState Instance;
     public EcsWorld world;
-    public EcsPackedEntity packedEntity;
+    public EcsPackedEntity CurrentPlayer;
     private List<Config> Configs;
     private Tilemap tilemapWalking;
     public Tilemap TilemapWalking { set => tilemapWalking = value; }
