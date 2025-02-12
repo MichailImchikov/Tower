@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 
 namespace Client {
     sealed class TakeDamageSystem : IEcsRunSystem {
-        readonly EcsFilterInject<Inc<TakeDamageEvent, HealthComponent>,Exc<DeathComponent>> _filter;
+        readonly EcsFilterInject<Inc<TakeDamageEvent, HealthComponent>,Exc<DeathStateComponent>> _filter;
         readonly EcsPoolInject<HealthComponent> _healthPool;
         readonly EcsPoolInject<TakeDamageEvent> _takeDamagePool;
         readonly EcsPoolInject<DeathEvent> _DeathPool;

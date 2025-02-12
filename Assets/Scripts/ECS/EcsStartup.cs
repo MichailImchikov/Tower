@@ -11,6 +11,7 @@ namespace Client {
         EcsSystems _inputSystems;
         EcsSystems _abilitySystem;
         EcsSystems _fightSystems;
+        EcsSystems _unitStateSystems;
         private void Awake()
         {
             _state = new GameState();
@@ -23,6 +24,7 @@ namespace Client {
             _inputSystems = new EcsSystems (_world, _state);
             _fightSystems = new EcsSystems ( _world, _state);
             _abilitySystem = new EcsSystems ( _world, _state);
+            _unitStateSystems = new EcsSystems ( _world, _state);
             _systems
                 .Add(new InitMapSystem())
                 .Add(new InitPlayerSystems())
@@ -50,34 +52,49 @@ namespace Client {
                 .DelHere<MouseClickDownEvent>()
                 .DelHere<ScrollMouseWheelEvent>()
                 .Add(new DragAndDropSystem())
+
                 .Add(new MoveCameraSystem())
                 .DelHere<DragAndDropEvent>()
+
                 .Add(new InputSystem())
                 .Add(new CheckClampButtonSystem())
                 .Add(new TimerMouseClampSystem())
                 .Add(new ScrollCameraSystem())
+
+                .Add(new CheckInvokeAbilitySystem())
+                .Add(new CheckInitAttackZoneSystem())
                 .Add(new CheckInputChangePlayerSystem())
                 .Add(new CheckInputForMovementSystem())
+
                 ;
             _abilitySystem
+                .Add(new ChoosingAbilityUseSystem())
                 .Add(new InitAbilitySystem())
                 .Add(new InitAttackZoneSystem())
                 .Add(new InvokeAbilitySystem())
                 .DelHere<InitAttackZoneEvent>()
                 .DelHere<InitAbilityEvent>()
                 .DelHere<InvokeAbilityEvent>()
+                .DelHere<ChoosingAbilityUseEvent>()
                 ;
             _fightSystems
                 .Add(new RequestTakeDamageSystem())
                 .Add(new TakeDamageSystem())
-                .Add(new DeathSystem())
-                .DelHere<DeathEvent>()
+
                 .DelHere<TakeDamageEvent>()
                 .DelHere<RequestDamageEvent>()
                 ;
+            _unitStateSystems
+                .Add(new DeathSystem())
+                .Add(new ChangeAttackStateSystem())
+                .Add(new ChangeMoveStateSystem())
+                .DelHere<DeathEvent>()
+                .DelHere<ChangeMoveStateEvent>()
+                .DelHere<ChangeAttackStateEvent>()
+                ;
 
-            InjectAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem);
-            InitAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem);
+            InjectAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem, _unitStateSystems);
+            InitAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem, _unitStateSystems);
 
         }
 
@@ -87,6 +104,7 @@ namespace Client {
             _inputSystems?.Run();
             _fightSystems?.Run();
             _abilitySystem?.Run();
+            _unitStateSystems?.Run();
         }
 
         void OnDestroy () {
@@ -108,6 +126,11 @@ namespace Client {
             {
                 _abilitySystem.Destroy();
                 _abilitySystem = null;
+            }           
+            if (_unitStateSystems != null)
+            {
+                _unitStateSystems.Destroy();
+                _unitStateSystems = null;
             }
             if (_world != null) {
                 _world.Destroy ();

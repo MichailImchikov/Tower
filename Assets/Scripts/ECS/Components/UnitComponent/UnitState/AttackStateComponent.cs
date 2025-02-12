@@ -1,5 +1,5 @@
 namespace Client {
-    struct DeathComponent {
+    struct AttackStateComponent {
         // add your data here.
     }
 }
