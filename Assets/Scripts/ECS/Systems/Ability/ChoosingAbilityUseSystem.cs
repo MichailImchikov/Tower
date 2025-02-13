@@ -14,9 +14,11 @@ namespace Client {
                 ref var choosingAbility = ref _choosingAbilityPool.Value.Get(entity);
                 if (!choosingAbility.abilityEntity.Unpack(_world.Value, out int abilityEntity)) continue;
                 if (!choosingAbility.ownerAbility.Unpack(_world.Value, out int ownerAbility)) continue;
+                if (!_abilityToUsePool.Value.Has(ownerAbility)) _abilityToUsePool.Value.Add(ownerAbility);
                 ref var abilityContainerComp =  ref _abilityContainerPool.Value.Get(ownerAbility);
                 abilityContainerComp.RemoveAbilities(_world.Value);
-                _abilityToUsePool.Value.Add(abilityEntity);
+                ref var abilityToUseComp = ref _abilityToUsePool.Value.Get(ownerAbility);
+                abilityToUseComp.entityAbility = choosingAbility.abilityEntity;
             }
         }
     }

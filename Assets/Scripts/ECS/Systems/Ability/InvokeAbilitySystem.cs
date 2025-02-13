@@ -7,6 +7,7 @@ namespace Client {
         readonly EcsPoolInject<AttackZoneComponent> _attackZonePool;
         readonly EcsPoolInject<RequestDamageEvent> _requestDamageEvent;
         readonly EcsPoolInject<AbilityComponent> _abilityPool;
+        readonly EcsPoolInject<ClearMapDrawerEvent> _clearMapDrawerPool;
         readonly EcsWorldInject _world;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
@@ -20,6 +21,7 @@ namespace Client {
                     requestDamageComp.Damage = abilityComp.ability.Damage;
                 }
                 _attackZonePool.Value.Del(entity);
+                _clearMapDrawerPool.Value.Add(_world.Value.NewEntity());
             }
         }
     }

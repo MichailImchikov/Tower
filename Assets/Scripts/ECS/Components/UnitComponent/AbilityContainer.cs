@@ -11,10 +11,6 @@ namespace Client {
             foreach(var abilityPacked in Abilities)
             {
                 if (!abilityPacked.Unpack(world, out int abilityEntity)) continue;
-                if (abilityToUsePool.Has(abilityEntity))
-                {
-                    abilityToUsePool.Del(abilityEntity);
-                }
                 if (attackZonePool.Has(abilityEntity))
                 {
                     attackZonePool.Del(abilityEntity);

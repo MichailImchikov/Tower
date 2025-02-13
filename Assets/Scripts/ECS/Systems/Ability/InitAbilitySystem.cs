@@ -13,6 +13,7 @@ namespace Client {
                 ref var abilityComp = ref _abilityPool.Value.Add(entity);
                 abilityComp.ability = initAbility.ability;
                 abilityComp.packedEntityOwner = initAbility.packedEntityOwner;
+                abilityComp.IsOn=false;
                 // todo event on DrawAreaAttack;
             }
         }

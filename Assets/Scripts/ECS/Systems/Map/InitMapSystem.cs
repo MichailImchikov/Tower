@@ -27,6 +27,8 @@ namespace Client {
             ref var transformCircleComp= ref _transformPool.Value.Add(entityMap);
             transformCircleComp.TransformCursor = TransformCircle.transform.GetChild(0);
             transformCircleComp.TransformForPlayer = TransformCircle.transform.GetChild(1);
+
+            GameState.Instance.MapEntity = _world.Value.PackEntity(entityMap);
             
         }
     }
