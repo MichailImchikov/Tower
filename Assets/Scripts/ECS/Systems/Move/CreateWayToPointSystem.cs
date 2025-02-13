@@ -11,6 +11,7 @@ namespace Client {
         readonly EcsPoolInject<CreateWayToPointEvent> _createWayToPointPool;
         readonly EcsPoolInject<AreaWalkingComponent> _areWalkingPool;
         readonly EcsPoolInject<MoveToPointComponent> _moveToPointPool;
+        readonly EcsPoolInject<RemoveMovementPointsEvent> _removeMovementPointsPool;
         private Dictionary<PointMap, int> rangeArea;
         public Dictionary<PointMap, List<PointMap>> obstacles;
         public void Run(IEcsSystems systems)
@@ -39,6 +40,8 @@ namespace Client {
                 moveToPointComp.WayToPoint = _points;
                 moveToPointComp.IndexCurrentPoint = 0;
                 _areWalkingPool.Value.Del(entity);
+                ref var removeMovementEvent = ref _removeMovementPointsPool.Value.Add(entity);
+                removeMovementEvent.Value = moveToPointComp.WayToPoint.Count - 1;
             }
         }
         private void CheakObstacleOnMyWay( int index, Vector3 direction, ref Vector3 endPos)

@@ -10,8 +10,8 @@ using UnityEngine.UIElements;
 namespace Client {
     sealed class CreateAreaWalkingSystem : IEcsRunSystem
     {
-        readonly EcsFilterInject<Inc<CreateAreaWalkingEvent, MoveComponent, TransformComponent>> _filter;
-        readonly EcsPoolInject<MoveComponent> _movePool;
+        readonly EcsFilterInject<Inc<CreateAreaWalkingEvent, MovePointsComponent, TransformComponent>> _filter;
+        readonly EcsPoolInject<MovePointsComponent> _movePool;
         readonly EcsPoolInject<TransformComponent> _transformPool;
         readonly EcsPoolInject<AreaWalkingComponent> _areaWolkingPool;
         private static int _layerMask = 1<<3;
@@ -21,9 +21,10 @@ namespace Client {
             {
                 ref var moveComp = ref _movePool.Value.Get(entity);
                 ref var transformComp = ref _transformPool.Value.Get(entity);
+
                 var area = new Dictionary<PointMap, int> { { GameState.Instance.GetNewPoint(transformComp.Transform.position), 0 } };
                 Dictionary<PointMap, List<PointMap>> obstacle = new ();
-                for (int index = 0; index < moveComp.MaxCellMove; index++)
+                for (int index = 0; index < moveComp.CurrentValue; index++)
                 {
                     var filteredDict = area.Where(pair => pair.Value == index)
                                          .ToDictionary(pair => pair.Key, pair => pair.Value);
