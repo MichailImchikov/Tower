@@ -8,7 +8,7 @@ namespace Client {
         readonly EcsPoolInject<AllyComponent> _allyPool;
         readonly EcsPoolInject<TransformComponent> _transformPool;
         readonly EcsPoolInject<ChangePlayerEvent> _changePlayerPool;
-        readonly EcsPoolInject<MoveComponent> _movePool;
+        readonly EcsPoolInject<MovePointsComponent> _movePool;
         readonly EcsPoolInject<PointInMapComponent> _pointInMapPool;
         readonly EcsPoolInject<AnimatorComponent> _animatorPool;
         readonly EcsPoolInject<HealthComponent> _healthPool;
@@ -24,7 +24,8 @@ namespace Client {
                 ref var transformComp = ref _transformPool.Value.Add(newEntity);
                 transformComp.Transform = ally.transform;
                 ref var moveComponent = ref _movePool.Value.Add(newEntity);
-                moveComponent.MaxCellMove = ally.MaxCellMove;
+                moveComponent.BaseValue = ally.MaxCellMove;
+                moveComponent.CurrentValue = moveComponent.BaseValue;
                 ref var pointInMapComp = ref _pointInMapPool.Value.Add(newEntity);
                 pointInMapComp.pointMap = GameState.Instance.GetNewPoint(transformComp.Transform.position);
                 transformComp.Transform.position = pointInMapComp.pointMap.PointToWorld;

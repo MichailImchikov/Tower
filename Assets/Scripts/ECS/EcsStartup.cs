@@ -31,6 +31,8 @@ namespace Client {
                 .Add(new ChangeAnimationSystem())
                 .DelHere<RequestAnimationEvent>()
                 .Add(new CreateWayToPointSystem())
+                .Add(new RemoveMovementPointsSystem())
+                .DelHere<RemoveMovementPointsEvent>()
                 .DelHere<CreateWayToPointEvent>()
                 .Add(new MoveToPointSystem())
                 .Add(new ChangePlayerSystems())
