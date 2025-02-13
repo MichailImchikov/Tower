@@ -37,9 +37,11 @@ namespace Client {
                 .Add(new ClearMapDrawerSystem())
                 .Add(new CreateAreaWalkingSystem())
                 .Add(new DrawAreaWalkingSystem())
+                .Add(new DrawAttackZoneSystem())
                 .DelHere<ChangePlayerEvent>()
                 .DelHere<CreateAreaWalkingEvent>()
                 .DelHere<DrawAreaWalkingEvent>()
+                .DelHere<DrawAttackZoneEvent>()
                 .Add(new MovementCircleSystem())
 #if UNITY_EDITOR
                 // add debug systems for custom worlds here, for example:
@@ -71,12 +73,12 @@ namespace Client {
                 .Add(new ChoosingAbilityUseSystem())
                 .Add(new InitAbilitySystem())
                 .Add(new InitAttackZoneSystem())
-                .Add(new DrawAttackZoneSystem())
+                
                 .Add(new InvokeAbilitySystem())
                 .DelHere<InitAttackZoneEvent>()
                 .DelHere<InitAbilityEvent>()
                 .DelHere<InvokeAbilityEvent>()
-                .DelHere<DrawAttackZoneEvent>()
+                
 
                 .DelHere<ChoosingAbilityUseEvent>()
 

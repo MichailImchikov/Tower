@@ -4,7 +4,7 @@ using Leopotam.EcsLite.Di;
 
 namespace Client {
     sealed class DrawAttackZoneSystem : IEcsRunSystem {
-        readonly EcsFilterInject<Inc<AttackZoneComponent>> _filter;
+        readonly EcsFilterInject<Inc<DrawAttackZoneEvent, AttackZoneComponent>> _filter;
         readonly EcsPoolInject<AttackZoneComponent> _attackZonePool;
         readonly EcsPoolInject<MapAreaDrawerComponent> _mapAreaDrawerPool;
         readonly EcsPoolInject<AbilityComponent> _abilityPool;
