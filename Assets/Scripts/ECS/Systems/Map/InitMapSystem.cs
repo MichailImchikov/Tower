@@ -1,0 +1,35 @@
+using Leopotam.EcsLite;
+using Leopotam.EcsLite.Di;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+namespace Client {
+    sealed class InitMapSystem : IEcsInitSystem {
+        readonly EcsWorldInject _world;
+        readonly EcsPoolInject<MapAreaDrawerComponent> _mapDrawerPool;
+        readonly EcsPoolInject<MapAreaWalkingComponent> _mapWalkingPool;
+        readonly EcsPoolInject<CircleTransformComponent> _transformPool;
+        public void Init (IEcsSystems systems) 
+        {
+            var TransformCircle = GameObject.FindObjectOfType<CircleMB>();
+            var TileMapDrawer = GameObject.FindObjectOfType<MapAreaDrawer>();
+            var TileMapWalking = GameObject.FindObjectOfType<MapAreaWalking>();
+            var entityMap = _world.Value.NewEntity();
+
+            ref var drawerComp = ref _mapDrawerPool.Value.Add(entityMap);
+            drawerComp.tilemap = TileMapDrawer.GetComponent<Tilemap>();
+            drawerComp.TileWay = TileMapDrawer.TileWay;
+
+            ref var wolkingComp = ref _mapWalkingPool.Value.Add(entityMap);
+            wolkingComp.tilemap = TileMapWalking.GetComponent<Tilemap>();
+            GameState.Instance.TilemapWalking = wolkingComp.tilemap;
+
+            ref var transformCircleComp= ref _transformPool.Value.Add(entityMap);
+            transformCircleComp.TransformCursor = TransformCircle.transform.GetChild(0);
+            transformCircleComp.TransformForPlayer = TransformCircle.transform.GetChild(1);
+
+            GameState.Instance.MapEntity = _world.Value.PackEntity(entityMap);
+            
+        }
+    }
+}
