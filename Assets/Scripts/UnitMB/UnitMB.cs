@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -11,8 +12,9 @@ public class UnitMB : MonoBehaviour
     public int MaxCellMove = 5;
     public float Health = 100;
     public WeaponConfig WeaponConfig;
-    private void Start()
+    [HideInInspector] public List<WeaponView> WeaponView = new();
+    private void Awake()
     {
-
+        WeaponView = GetComponentsInChildren<WeaponView>().ToList();
     }
 }

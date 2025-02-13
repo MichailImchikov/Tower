@@ -13730,6 +13730,7 @@ MonoBehaviour:
   MaxCellMove: 6
   Health: 100
   WeaponConfig: {fileID: 11400000, guid: 92dfad2290e2df14f847872f3ef9dc78, type: 2}
+  WeaponView: []
 --- !u!4 &388048272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2055102311959635375, guid: 6242b925f1d3e0d44a183102cd3d4c26, type: 3}
@@ -16220,6 +16221,7 @@ MonoBehaviour:
   MaxCellMove: 3
   Health: 100
   WeaponConfig: {fileID: 0}
+  WeaponView: []
 --- !u!1001 &1037497956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17604,7 +17606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5836857197505123814, guid: c54b36ee7861c4b41bd1dabf2455160f, type: 3}
       propertyPath: m_Name
-      value: Ally2
+      value: Kian Riavse
       objectReference: {fileID: 0}
     - target: {fileID: 5836857197505123814, guid: c54b36ee7861c4b41bd1dabf2455160f, type: 3}
       propertyPath: m_Layer
@@ -18575,6 +18577,7 @@ MonoBehaviour:
   MaxCellMove: 3
   Health: 100
   WeaponConfig: {fileID: 0}
+  WeaponView: []
 --- !u!1001 &1641670083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24610,6 +24613,7 @@ MonoBehaviour:
   MaxCellMove: 3
   Health: 100
   WeaponConfig: {fileID: 0}
+  WeaponView: []
 --- !u!1001 &2023936266
 PrefabInstance:
   m_ObjectHideFlags: 0

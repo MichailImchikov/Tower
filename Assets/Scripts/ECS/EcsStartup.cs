@@ -29,6 +29,7 @@ namespace Client {
                 .Add(new InitMapSystem())
                 .Add(new InitPlayerSystems())
                 .Add(new ChangeAnimationSystem())
+                .Add(new ChangeWeaponSystem())
                 .DelHere<RequestAnimationEvent>()
                 .Add(new CreateWayToPointSystem())
                 .Add(new RemoveMovementPointsSystem())
@@ -44,6 +45,7 @@ namespace Client {
                 .DelHere<CreateAreaWalkingEvent>()
                 .DelHere<DrawAreaWalkingEvent>()
                 .DelHere<DrawAttackZoneEvent>()
+                .DelHere<ChangeWeaponEvent>()
                 .Add(new MovementCircleSystem())
 #if UNITY_EDITOR
                 // add debug systems for custom worlds here, for example:
