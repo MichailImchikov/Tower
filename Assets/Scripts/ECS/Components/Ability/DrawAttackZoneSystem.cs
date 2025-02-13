@@ -6,17 +6,19 @@ namespace Client {
     sealed class DrawAttackZoneSystem : IEcsRunSystem {
         readonly EcsFilterInject<Inc<AttackZoneComponent>> _filter;
         readonly EcsPoolInject<AttackZoneComponent> _attackZonePool;
-        readonly EcsFilterInject<Inc<MapAreaDrawerComponent>> _filterDrawer;
         readonly EcsPoolInject<MapAreaDrawerComponent> _mapAreaDrawerPool;
+        readonly EcsPoolInject<AbilityComponent> _abilityPool;
+        readonly EcsWorldInject _world;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
             {
-                var entityMap = _filterDrawer.Value.GetRawEntities()[0];
+                if (!GameState.Instance.MapEntity.Unpack(_world.Value, out int entityMap)) continue;
                 ref var mapAreaDrawerComp = ref _mapAreaDrawerPool.Value.Get(entityMap);
                 ref var AttackZonePoints = ref _attackZonePool.Value.Get(entity);
-                foreach(var point in AttackZonePoints.pointAttack)
+                ref var abilityComponent = ref _abilityPool.Value.Get(entity);
+                foreach (var point in AttackZonePoints.pointAttack)
                 {
-                    mapAreaDrawerComp.tilemap.SetTile(point.PointToMap, mapAreaDrawerComp.TileWay);
+                    mapAreaDrawerComp.tilemap.SetTile(point.PointToMap, abilityComponent.ability.TileView);
                 }
             }
         }

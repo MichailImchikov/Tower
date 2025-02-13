@@ -13729,7 +13729,7 @@ MonoBehaviour:
   Entity: 0
   MaxCellMove: 6
   Health: 100
-  WeaponConfig: {fileID: 0}
+  WeaponConfig: {fileID: 11400000, guid: 92dfad2290e2df14f847872f3ef9dc78, type: 2}
 --- !u!4 &388048272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2055102311959635375, guid: 6242b925f1d3e0d44a183102cd3d4c26, type: 3}

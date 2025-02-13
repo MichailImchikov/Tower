@@ -14,10 +14,9 @@ namespace Client {
 
         readonly EcsPoolInject<ChangeMoveStateEvent> _moveStatePool;
         readonly EcsPoolInject<ChangeAttackStateEvent> _attakStatePool;
-        readonly EcsFilterInject<Inc<PlayerComponent,AbilityContainer>> _filterPlayer;
+        readonly EcsFilterInject<Inc<PlayerComponent,AbilityContainer,AttackStateComponent>> _filterPlayer;
         readonly EcsPoolInject<AbilityContainer> _abilityContainerPool;
         readonly EcsPoolInject<ChoosingAbilityUseEvent> _chosingAbilityPool;
-        readonly EcsPoolInject<AttackStateComponent> _attackStatePool;
         public void Init(IEcsSystems systems)
         {
             var entityInput = _world.Value.NewEntity();
@@ -41,17 +40,14 @@ namespace Client {
                 // todo Transfer to the UI
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    foreach(var entityPlayer in _filterPlayer.Value)
-                    {
-                        _attakStatePool.Value.Add(entityPlayer);
-                    }
+                    if (GameState.Instance.CurrentPlayer.Unpack(_world.Value, out int entityPlayer))
+                        if(_abilityContainerPool.Value.Has(entityPlayer))
+                            _attakStatePool.Value.Add(entityPlayer);
                 }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    foreach (var entityPlayer in _filterPlayer.Value)
-                    {
+                    if (GameState.Instance.CurrentPlayer.Unpack(_world.Value, out int entityPlayer))
                         _moveStatePool.Value.Add(entityPlayer);
-                    }
                 }
                 for (int i=0 ; i<=9 ; i++)
                 {
@@ -61,7 +57,6 @@ namespace Client {
                         ref var abilityContainer = ref _abilityContainerPool.Value.Get(entityPlayer);
                         if (abilityContainer.Abilities.Count < i) continue;
                         if (!abilityContainer.Abilities[i - 1].Unpack(_world.Value, out int abilityEntity)) continue;
-                        if (!_attackStatePool.Value.Has(entityPlayer)) continue;
                         ref var choosingAbilityComp = ref _chosingAbilityPool.Value.Add(entityPlayer);
                         choosingAbilityComp.abilityEntity = _world.Value.PackEntity(abilityEntity);
                         choosingAbilityComp.ownerAbility = _world.Value.PackEntity(entityPlayer);

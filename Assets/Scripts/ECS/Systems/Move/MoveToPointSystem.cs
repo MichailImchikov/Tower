@@ -42,7 +42,7 @@ namespace Client {
                 {
                     var diraction = moveToPointComp.CurrentPoint().PointToWorld - transformComp.Transform.position;
                     if (diraction.y != 0) continue;
-                    if (diraction.x > 0) transformComp.Transform.GetChild(0).localScale = new Vector3(-1, 1, 1);// to do normal, igor bi volosi na gope rval za takoe
+                    if (diraction.x > 0) transformComp.Transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
                     else transformComp.Transform.GetChild(0).localScale = new Vector3(1, 1, 1);
                 }
             }

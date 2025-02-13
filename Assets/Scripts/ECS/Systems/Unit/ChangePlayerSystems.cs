@@ -8,7 +8,6 @@ namespace Client {
         readonly EcsPoolInject<ChangePlayerEvent> _changePlayerPool;
         readonly EcsPoolInject<PlayerComponent> _playerPool;
         readonly EcsWorldInject _world;
-        readonly EcsFilterInject<Inc<PlayerComponent>> _filterPlayer;
         readonly EcsPoolInject<TransformComponent> _transformPool;
         readonly EcsPoolInject<CreateAreaWalkingEvent> _areaWalkingPool;
         readonly EcsPoolInject<DrawAreaWalkingEvent> _drawAreaWalkingPool;

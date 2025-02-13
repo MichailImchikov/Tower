@@ -10,6 +10,8 @@ namespace Client {
         readonly EcsPoolInject<PlayerComponent> _player;
         readonly EcsPoolInject<DrawAreaWalkingEvent> _drawerAreaWalkingPool;
         readonly EcsPoolInject<AbilityContainer> _abilityContainerPool;
+        readonly EcsPoolInject<AbilityToUseComponent> _abilityToUsePool;
+        readonly EcsPoolInject<ClearMapDrawerEvent> _clearMapDrawerEvent;
         readonly EcsWorldInject _world;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
@@ -20,9 +22,11 @@ namespace Client {
                     ref var abilityContainer = ref _abilityContainerPool.Value.Get(entity);
                     abilityContainer.RemoveAbilities(_world.Value);
                 }
+                if (_abilityToUsePool.Value.Has(entity)) _abilityToUsePool.Value.Del(entity);
                 if(!_moveStatePool.Value.Has(entity)) _moveStatePool.Value.Add(entity);
                 if (!_areaWalkingPool.Value.Has(entity)) _areaWalkingPool.Value.Add(entity);
                 if (_player.Value.Has(entity)) _drawerAreaWalkingPool.Value.Add(entity);
+                _clearMapDrawerEvent.Value.Add(_world.Value.NewEntity());
             }
 
         }
