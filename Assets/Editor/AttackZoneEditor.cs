@@ -2,24 +2,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(AttackZoneConfig))]
-public class AttackZoneEditor : Editor
+[CustomEditor(typeof(MatrixConfig))]
+public class MatrixEditor : Editor
 {
-    private AttackZoneConfig zone;
+    private MatrixConfig zone;
 
     private void OnEnable()
     {
-        zone = (AttackZoneConfig)target;
-
-        //// Проверка и инициализация матрицы, если она пустая
-        //if (zone.attackZone.matrix == null || zone.attackZone.matrix.Count == 0)
-        //{
-        //    zone.attackZone.matrix = new List<AttackZoneConfig.MatrixRow>
-        //    {
-        //        new AttackZoneConfig.MatrixRow { values = new List<int> { 0, 0 } },
-        //        new AttackZoneConfig.MatrixRow { values = new List<int> { 0, 0 } }
-        //    };
-        //}
+        zone = (MatrixConfig)target;
     }
 
     public override void OnInspectorGUI()
@@ -28,17 +18,17 @@ public class AttackZoneEditor : Editor
 
         // Отображаем матрицу
         EditorGUILayout.LabelField("Matrix", EditorStyles.boldLabel);
-        for (int i = 0; i < zone.attackZone.matrix.Count; i++)
+        for (int i = 0; i < zone.matrix.matrix.Count; i++)
         {
-            if (zone.attackZone.matrix[i] == null)
+            if (zone.matrix.matrix[i] == null)
             {
-                zone.attackZone.matrix[i] = new MatrixRow { values = new List<int>() };
+                zone.matrix.matrix[i] = new MatrixRow { values = new List<int>() };
             }
 
             EditorGUILayout.BeginHorizontal();
-            for (int j = 0; j < zone.attackZone.matrix[i].values.Count; j++)
+            for (int j = 0; j < zone.matrix.matrix[i].values.Count; j++)
             {
-                zone.attackZone.matrix[i].values[j] = EditorGUILayout.IntField(zone.attackZone.matrix[i].values[j], GUILayout.Width(50));
+                zone.matrix.matrix[i].values[j] = EditorGUILayout.IntField(zone.matrix.matrix[i].values[j], GUILayout.Width(50));
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -59,11 +49,11 @@ public class AttackZoneEditor : Editor
         // Кнопка для поворота матрицы
         if (GUILayout.Button("Rotate Matrix"))
         {
-            zone.attackZone.RotateMatrix();
+            zone.matrix.RotateMatrix();
             EditorUtility.SetDirty(zone); // Помечаем объект как измененный
         }
 
-        if (GUILayout.Button("Remove Row") && zone.attackZone.matrix.Count > 1)
+        if (GUILayout.Button("Remove Row") && zone.matrix.matrix.Count > 1)
         {
             RemoveRow();
         }
@@ -82,14 +72,14 @@ public class AttackZoneEditor : Editor
 
     private int GetColumnCount()
     {
-        return zone.attackZone.matrix.Count > 0 ? zone.attackZone.matrix[0].values.Count : 0;
+        return zone.matrix.matrix.Count > 0 ? zone.matrix.matrix[0].values.Count : 0;
     }
 
     private void RemoveRow()
     {
-        if (zone.attackZone.matrix.Count > 1)
+        if (zone.matrix.matrix.Count > 1)
         {
-            zone.attackZone.matrix.RemoveAt(zone.attackZone.matrix.Count - 1);
+            zone.matrix.matrix.RemoveAt(zone.matrix.matrix.Count - 1);
         }
     }
 
@@ -98,7 +88,7 @@ public class AttackZoneEditor : Editor
         int columnCount = GetColumnCount();
         if (columnCount > 1)
         {
-            foreach (var row in zone.attackZone.matrix)
+            foreach (var row in zone.matrix.matrix)
             {
                 if (row != null && row.values.Count > 0)
                 {
@@ -112,13 +102,13 @@ public class AttackZoneEditor : Editor
     {
         int columnCount = GetColumnCount();
         var newRow = new MatrixRow { values = new List<int>(new int[columnCount]) };
-        zone.attackZone.matrix.Add(newRow);
+        zone.matrix.matrix.Add(newRow);
     }
 
 
     private void AddColumn()
     {
-        foreach (var row in zone.attackZone.matrix)
+        foreach (var row in zone.matrix.matrix)
         {
             if (row != null)
             {
@@ -127,3 +117,9 @@ public class AttackZoneEditor : Editor
         }
     }
 }
+[CustomEditor(typeof(AttackZoneConfig))]
+public class AttackZoneEditor : MatrixEditor
+{
+}
+[CustomEditor(typeof(AttackAreaConfig))]
+public class AttackAreaEditor : MatrixEditor { }

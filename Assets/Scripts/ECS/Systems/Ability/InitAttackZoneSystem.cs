@@ -17,7 +17,7 @@ namespace Client {
             {
                 ref var initPool = ref _initAttackZonePool.Value.Get(entity);
                 ref var abilityComponent = ref _abilityComponent.Value.Get(entity);
-                var attackZone = GetAttackPoints(abilityComponent.ability.AttackZoneConfig.attackZone, initPool.pointCenter);
+                var attackZone = GetAttackPoints(abilityComponent.ability.AttackZoneConfig.matrix, initPool.pointCenter);
                 attackZone.Add(initPool.pointCenter);
                 if (attackZone is null) continue;
                 if (!_attackZoneComponent.Value.Has(entity)) 
@@ -30,7 +30,7 @@ namespace Client {
                 // todo DrawAttackZoneEvent
             }
         }
-        private  List<PointMap> GetAttackPoints(AttackZone attackZone, PointMap basePoint)
+        private  List<PointMap> GetAttackPoints(Matrix attackZone, PointMap basePoint)
 
         {
             if (attackZone == null || attackZone.matrix == null || attackZone.matrix.Count == 0)
