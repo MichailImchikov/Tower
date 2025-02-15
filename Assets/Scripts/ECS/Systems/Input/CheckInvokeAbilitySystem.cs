@@ -11,7 +11,6 @@ namespace Client {
         readonly EcsFilterInject<Inc<MouseClickUpEvent, MousePositionComponent>> _filterInput;
         readonly EcsPoolInject<MousePositionComponent> _mousePositionPool;
         readonly EcsPoolInject<AttackZoneComponent> _attackZonePool;
-        readonly EcsPoolInject<InvokeAbilityEvent> _invokeAbility;
         readonly EcsPoolInject<MouseClickUpEvent> _mouseClickUpPool;
         readonly EcsPoolInject<AbilityToUseComponent> _abilityToUsePool;
         readonly EcsPoolInject<RequestInvokeEvent> _requestInvokePool;
@@ -28,8 +27,7 @@ namespace Client {
                 {
                     ref var mouseClick = ref _mousePositionPool.Value.Get(entityClick);
                     if (mouseClick.pointMap.PointToMap != attackZoneComp.Click.PointToMap) continue;
-                    _requestInvokePool.Value.Add(entityPlayer);
-                    //_invokeAbility.Value.Add(abilityEntity);
+                    _requestInvokePool.Value.Add(abilityEntity);
                     _mouseClickUpPool.Value.Del(entityClick);
                 }
             }
