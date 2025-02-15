@@ -75,10 +75,11 @@ namespace Client {
                 .Add(new ChoosingAbilityUseSystem())
                 .Add(new InitAbilitySystem())
                 .Add(new InitAttackZoneSystem())
-                
+                .Add(new RequestInvokeSystem())
                 .Add(new InvokeAbilitySystem())
                 .DelHere<InitAttackZoneEvent>()
                 .DelHere<InitAbilityEvent>()
+                .DelHere<RequestInvokeEvent>()
                 .DelHere<InvokeAbilityEvent>()
                 
 

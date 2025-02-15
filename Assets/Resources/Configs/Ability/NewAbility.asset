@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ability:
     Damage: 10
-    Cost: 0
+    Cost: 1
     TileView: {fileID: 11400000, guid: 9f3878d3d90a3da48b763071d9dfd676, type: 2}
     AttackZoneConfig: {fileID: 11400000, guid: 53aeaccccac153d44bb0850afdc91211, type: 2}

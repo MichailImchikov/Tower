@@ -14,6 +14,7 @@ namespace Client {
         readonly EcsPoolInject<HealthComponent> _healthPool;
         readonly EcsPoolInject<InitAbilityEvent> _initAbility;
         readonly EcsPoolInject<AbilityContainer> _abilityContainer;
+        readonly EcsPoolInject<AbilityPointsComponent> _abilityPointsPool;
         public void Init (IEcsSystems systems) {
             var unitsAtScenes = GameObject.FindObjectsOfType<UnitMB>();
             foreach(var ally in unitsAtScenes)
@@ -33,6 +34,9 @@ namespace Client {
                 animatorComponent.Animator = ally.GetComponentInChildren<Animator>();
                 ref var healthPool = ref _healthPool.Value.Add(newEntity);
                 healthPool.Health = ally.Health;
+                ref var abilityPointsComp = ref _abilityPointsPool.Value.Add(newEntity);
+                abilityPointsComp.BasePoints = 20;
+                abilityPointsComp.CurrentValue = abilityPointsComp.BasePoints;
                 if(ally.WeaponConfig is not null)
                 {
                     ref var abilityContainer = ref _abilityContainer.Value.Add(newEntity);
