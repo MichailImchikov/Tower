@@ -75,14 +75,16 @@ namespace Client {
                 ;
             _abilitySystem
                 .Add(new ChoosingAbilityUseSystem())
+                .Add(new InitAttackAreaSystem())
                 .Add(new InitAbilitySystem())
                 .Add(new InitAttackZoneSystem())
-                
+                .Add(new TurnAttackZoneSystem())
+
                 .Add(new InvokeAbilitySystem())
                 .DelHere<InitAttackZoneEvent>()
                 .DelHere<InitAbilityEvent>()
                 .DelHere<InvokeAbilityEvent>()
-                
+                .DelHere<TurnAttackZoneEvent>()
 
                 .DelHere<ChoosingAbilityUseEvent>()
 

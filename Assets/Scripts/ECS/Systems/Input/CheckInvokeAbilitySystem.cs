@@ -26,7 +26,7 @@ namespace Client {
                 foreach (var entityClick in _filterInput.Value)
                 {
                     ref var mouseClick = ref _mousePositionPool.Value.Get(entityClick);
-                    if (mouseClick.pointMap.PointToMap != attackZoneComp.Click.PointToMap) continue;
+                    if (mouseClick.pointMap.PointToMap != attackZoneComp.Center.PointToMap) continue;
                     _invokeAbility.Value.Add(abilityEntity);
                     _mouseClickUpPool.Value.Del(entityClick);
                 }

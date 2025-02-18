@@ -11,23 +11,38 @@ namespace Client {
         readonly EcsPoolInject<AbilityComponent> _abilityComponent;
         readonly EcsPoolInject<DrawAttackZoneEvent> _drawAttackZonePool;
         readonly EcsPoolInject<ClearMapDrawerEvent> _clearMapDrawerPool;
+        readonly EcsPoolInject<AttackAreaComponent> _attackAreaPool;
+        readonly EcsPoolInject<TurnAttackZoneEvent> _turnAttackPool;
         readonly EcsWorldInject _world;
         public void Run (IEcsSystems systems) {
             foreach(var entity in _filter.Value)
             {
-                ref var initPool = ref _initAttackZonePool.Value.Get(entity);
+                ref var initAttackZoneComp = ref _initAttackZonePool.Value.Get(entity);
                 ref var abilityComponent = ref _abilityComponent.Value.Get(entity);
-                var attackZone = GetAttackPoints(abilityComponent.ability.AttackZoneConfig.matrix, initPool.pointCenter);
-                attackZone.Add(initPool.pointCenter);
-                if (attackZone is null) continue;
-                if (!_attackZoneComponent.Value.Has(entity)) 
-                    _attackZoneComponent.Value.Add(entity);
+                if (!_attackZoneComponent.Value.Has(entity))
+                {
+                    var attackZone = GetAttackPoints(abilityComponent.ability.AttackZoneConfig.matrix, initAttackZoneComp.pointCenter);
+                    attackZone.Add(initAttackZoneComp.pointCenter);
+                    if (attackZone is null) continue;
+                    ref var attackZoneComp = ref _attackZoneComponent.Value.Add(entity);
+                    attackZoneComp.Direction = 1;
+                    attackZoneComp.Center = initAttackZoneComp.pointCenter;
+                    attackZoneComp.pointAttack = attackZone;
+                }
+                else
+                {
+                    ref var attackZoneComponent1 = ref _attackZoneComponent.Value.Get(entity);
+                    attackZoneComponent1.NewCenter(initAttackZoneComp.pointCenter.PointToMap);
+                }
                 ref var attackZoneComponent = ref _attackZoneComponent.Value.Get(entity);
-                attackZoneComponent.pointAttack = attackZone;
-                attackZoneComponent.Click = initPool.pointCenter;
-                _clearMapDrawerPool.Value.Add(_world.Value.NewEntity());
+                if (!_attackAreaPool.Value.Has(entity)) continue;
+                ref var attackAreaComp = ref _attackAreaPool.Value.Get(entity);
+                if (!attackAreaComp.AttackArea.ContainsKey(attackZoneComponent.Center)) continue;
                 _drawAttackZonePool.Value.Add(entity);
-                // todo DrawAttackZoneEvent
+                _clearMapDrawerPool.Value.Add(_world.Value.NewEntity());
+                var permittedDirection = attackAreaComp.AttackArea[attackZoneComponent.Center];
+                if (attackZoneComponent.Direction == permittedDirection || permittedDirection == 5) continue;
+                _turnAttackPool.Value.Add(entity).NewDirection = permittedDirection;
             }
         }
         private  List<PointMap> GetAttackPoints(Matrix attackZone, PointMap basePoint)
@@ -56,7 +71,7 @@ namespace Client {
                     if (attackZone.matrix[r].values[c] == 1)
                     {
                         var deltaVector = center - new Vector3Int(c, r);
-                        var newPointInMap = basePoint.PointToMap - deltaVector;
+                        var newPointInMap = basePoint.PointToMap + new Vector3Int(-deltaVector.x, deltaVector.y, 0);
                         var PointMap = GameState.Instance.GetNewPoint(newPointInMap);
                         result.Add(PointMap);
                     }

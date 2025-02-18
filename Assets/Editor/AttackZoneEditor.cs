@@ -49,8 +49,8 @@ public class MatrixEditor : Editor
         // Кнопка для поворота матрицы
         if (GUILayout.Button("Rotate Matrix"))
         {
-            zone.matrix.RotateMatrix();
-            EditorUtility.SetDirty(zone); // Помечаем объект как измененный
+            RotateMatrix();
+            //EditorUtility.SetDirty(zone); // Помечаем объект как измененный
         }
 
         if (GUILayout.Button("Remove Row") && zone.matrix.matrix.Count > 1)
@@ -115,6 +115,32 @@ public class MatrixEditor : Editor
                 row.values.Add(0);
             }
         }
+    }
+    private void RotateMatrix()
+    {
+        int rowCount = zone.matrix.matrix.Count;
+        if (rowCount == 0) return;
+
+        int columnCount = zone.matrix.matrix[0].values.Count;
+
+        // Создаем новую матрицу с перевернутыми размерами
+        List<MatrixRow> newMatrix = new List<MatrixRow>();
+
+        for (int j = 0; j < columnCount; j++)
+        {
+            MatrixRow newRow = new MatrixRow { values = new List<int>() };
+            for (int i = rowCount - 1; i >= 0; i--)
+            {
+                newRow.values.Add(zone.matrix.matrix[i].values[j]);
+            }
+            newMatrix.Add(newRow);
+        }
+
+        // Заменяем старую матрицу на новую
+        zone.matrix.matrix = newMatrix;
+
+        // Помечаем объект как измененный
+        EditorUtility.SetDirty(zone);
     }
 }
 [CustomEditor(typeof(AttackZoneConfig))]
