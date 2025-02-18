@@ -80,9 +80,11 @@ namespace Client {
                 .Add(new InitAttackZoneSystem())
                 .Add(new TurnAttackZoneSystem())
 
+                .Add(new RequestInvokeSystem())
                 .Add(new InvokeAbilitySystem())
                 .DelHere<InitAttackZoneEvent>()
                 .DelHere<InitAbilityEvent>()
+                .DelHere<RequestInvokeEvent>()
                 .DelHere<InvokeAbilityEvent>()
                 .DelHere<TurnAttackZoneEvent>()
 

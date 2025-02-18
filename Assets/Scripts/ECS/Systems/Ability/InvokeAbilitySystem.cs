@@ -19,6 +19,7 @@ namespace Client {
                     ref var requestDamageComp = ref _requestDamageEvent.Value.Add(_world.Value.NewEntity());
                     requestDamageComp.PointInMap = point;
                     requestDamageComp.Damage = abilityComp.ability.Damage;
+                    
                 }
                 _attackZonePool.Value.Del(entity);
                 _clearMapDrawerPool.Value.Add(_world.Value.NewEntity());
