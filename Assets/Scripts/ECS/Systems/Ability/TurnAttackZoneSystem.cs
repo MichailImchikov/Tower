@@ -4,7 +4,6 @@ using Leopotam.EcsLite.Di;
 namespace Client {
     sealed class TurnAttackZoneSystem : IEcsRunSystem {
         readonly EcsFilterInject<Inc<AttackZoneComponent,TurnAttackZoneEvent>> _filter;
-        readonly EcsPoolInject<AttackAreaComponent> _attackAreaPool;
         readonly EcsPoolInject<AttackZoneComponent> _attackZonePool;
         readonly EcsPoolInject<TurnAttackZoneEvent> _turnAttackZoneEvent;
         public void Run (IEcsSystems systems) {

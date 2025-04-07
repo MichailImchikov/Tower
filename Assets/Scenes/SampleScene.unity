@@ -25670,6 +25670,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7524807469467467224, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
+      propertyPath: MaxCellMove
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7524807469467467224, guid: cfb7a75626a3b5c4485f7571c1591803, type: 3}
       propertyPath: WeaponConfig
       value: 
       objectReference: {fileID: 11400000, guid: e949bc986d1ea5c4daf60d033685be4d, type: 2}

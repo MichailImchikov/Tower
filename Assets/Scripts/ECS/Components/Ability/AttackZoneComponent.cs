@@ -16,14 +16,14 @@ namespace Client {
             }
             while (newDirection!= Direction)
             {
-                Direction++;
-                if (Direction >= 5) Direction = 1;
                 Trun();
             }
             Direction = newDirection;
         }
         public void Trun()
         {
+            Direction++;
+            if (Direction >= 5) Direction = 1;
             List<PointMap> rotatedArea = new List<PointMap>();
             foreach (PointMap point in pointAttack)
             {

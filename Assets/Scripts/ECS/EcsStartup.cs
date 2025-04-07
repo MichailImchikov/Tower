@@ -12,6 +12,7 @@ namespace Client {
         EcsSystems _abilitySystem;
         EcsSystems _fightSystems;
         EcsSystems _unitStateSystems;
+        EcsSystems _initSystems;
         private void Awake()
         {
             _state = new GameState();
@@ -25,9 +26,15 @@ namespace Client {
             _fightSystems = new EcsSystems ( _world, _state);
             _abilitySystem = new EcsSystems ( _world, _state);
             _unitStateSystems = new EcsSystems ( _world, _state);
-            _systems
+            _initSystems = new EcsSystems ( _world, _state);
+            _initSystems
                 .Add(new InitMapSystem())
                 .Add(new InitPlayerSystems())
+                .Add(new InitAbilitySystem())
+                .DelHere<InitAbilityEvent>()
+                ;
+            _systems
+
                 .Add(new ChangeAnimationSystem())
                 .Add(new ChangeWeaponSystem())
                 .DelHere<RequestAnimationEvent>()
@@ -76,18 +83,25 @@ namespace Client {
             _abilitySystem
                 .Add(new ChoosingAbilityUseSystem())
                 .Add(new InitAttackAreaSystem())
-                .Add(new InitAbilitySystem())
+
+
+                .Add(new RequestAttackZoneSystem())
                 .Add(new InitAttackZoneSystem())
+                .Add(new RelocateAttackZoneSystem())
+
+                .Add(new RequestTurnAttackSystem())
+                .Add(new CheckDirectionAttackSystem())
                 .Add(new TurnAttackZoneSystem())
 
                 .Add(new RequestInvokeSystem())
                 .Add(new InvokeAbilitySystem())
+                .DelHere<RequestTurnAttackEvent>()
                 .DelHere<InitAttackZoneEvent>()
-                .DelHere<InitAbilityEvent>()
                 .DelHere<RequestInvokeEvent>()
                 .DelHere<InvokeAbilityEvent>()
                 .DelHere<TurnAttackZoneEvent>()
-
+                .DelHere<RequestAttackZoneEvent>()
+                .DelHere<CheckDirectionAttackEvent>()
                 .DelHere<ChoosingAbilityUseEvent>()
 
                 ;
@@ -107,13 +121,14 @@ namespace Client {
                 .DelHere<ChangeAttackStateEvent>()
                 ;
 
-            InjectAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem, _unitStateSystems);
-            InitAllSystems(_systems, _inputSystems,_fightSystems, _abilitySystem, _unitStateSystems);
+            InjectAllSystems(_initSystems,_systems, _inputSystems,_fightSystems, _abilitySystem, _unitStateSystems);
+            InitAllSystems(_initSystems,_systems, _inputSystems,_fightSystems, _abilitySystem, _unitStateSystems);
 
         }
 
         void Update () {
             // process systems here.
+            _initSystems?.Run();
             _systems?.Run ();
             _inputSystems?.Run();
             _fightSystems?.Run();
@@ -122,6 +137,10 @@ namespace Client {
         }
 
         void OnDestroy () {
+            if (_initSystems != null) {
+                _initSystems.Destroy ();
+                _initSystems = null;
+            }            
             if (_systems != null) {
                 _systems.Destroy ();
                 _systems = null;

@@ -40,7 +40,7 @@ namespace Client {
                 ref var weaponViewComp = ref _weaponViewPool.Value.Add(newEntity);
                 weaponViewComp.WeaponsView = ally.WeaponView;
                 ref var abilityPointsComp = ref _abilityPointsPool.Value.Add(newEntity);
-                abilityPointsComp.BasePoints = 20;
+                abilityPointsComp.BasePoints = 20;//BEDA
                 abilityPointsComp.CurrentValue = abilityPointsComp.BasePoints;
                 if(ally.WeaponConfig is not null)
                 {
