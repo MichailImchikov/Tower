@@ -9,4 +9,5 @@ public class Ability
     public int Cost;
     public TileBase TileView;
     [SerializeReference] public AttackZoneConfig AttackZoneConfig;
+    [SerializeReference] public AttackAreaConfig AttackAreaConfig;
 }

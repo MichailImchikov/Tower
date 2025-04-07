@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using System.Linq;
 using UnityEngine;
 
 namespace Client {
@@ -14,6 +15,8 @@ namespace Client {
         readonly EcsPoolInject<HealthComponent> _healthPool;
         readonly EcsPoolInject<InitAbilityEvent> _initAbility;
         readonly EcsPoolInject<AbilityContainer> _abilityContainer;
+        readonly EcsPoolInject<WeaponViewComponent> _weaponViewPool;
+        readonly EcsPoolInject<ChangeWeaponEvent> _changeWeaponPool;
         readonly EcsPoolInject<AbilityPointsComponent> _abilityPointsPool;
         public void Init (IEcsSystems systems) {
             var unitsAtScenes = GameObject.FindObjectsOfType<UnitMB>();
@@ -34,21 +37,16 @@ namespace Client {
                 animatorComponent.Animator = ally.GetComponentInChildren<Animator>();
                 ref var healthPool = ref _healthPool.Value.Add(newEntity);
                 healthPool.Health = ally.Health;
+                ref var weaponViewComp = ref _weaponViewPool.Value.Add(newEntity);
+                weaponViewComp.WeaponsView = ally.WeaponView;
                 ref var abilityPointsComp = ref _abilityPointsPool.Value.Add(newEntity);
-                abilityPointsComp.BasePoints = 20;
+                abilityPointsComp.BasePoints = 20;//BEDA
                 abilityPointsComp.CurrentValue = abilityPointsComp.BasePoints;
                 if(ally.WeaponConfig is not null)
                 {
-                    ref var abilityContainer = ref _abilityContainer.Value.Add(newEntity);
-                    abilityContainer.Abilities = new();
-                    foreach(var abilityConfig in ally.WeaponConfig.AbilitiesConfig)
-                    {
-                        int abilityEntity = _world.Value.NewEntity();
-                        ref var initAbil = ref _initAbility.Value.Add(abilityEntity);
-                        initAbil.ability = abilityConfig.ability;
-                        initAbil.packedEntityOwner = _world.Value.PackEntity(newEntity);
-                        abilityContainer.Abilities.Add(_world.Value.PackEntity(abilityEntity));
-                    }
+                    ref var changeWeaponComp = ref _changeWeaponPool.Value.Add(_world.Value.NewEntity());
+                    changeWeaponComp.WeaponConfig = ally.WeaponConfig;
+                    changeWeaponComp.OwnerWeapon = _world.Value.PackEntity(newEntity);
                 }
             }
             ref var chargePlayerComp = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());

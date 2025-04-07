@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbilitiesConfig:
   - {fileID: 11400000, guid: bdde1b41cce79104aa9bec2d56a52d70, type: 2}
+  WeaponSprite: {fileID: 21300000, guid: bc54460ac3fe5478f9cacb9b1cbdcc69, type: 3}
+  Arm: 0
+  Equipment: 0
