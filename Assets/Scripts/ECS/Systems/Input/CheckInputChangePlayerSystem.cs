@@ -26,15 +26,13 @@ namespace Client
                 foreach(var entityAlly in _filterAlly.Value)
                 {
                     ref var pointOnMap = ref _pointMapPool.Value.Get(entityAlly);
-                    if(pointOnMap.pointMap.PointToMap == mousePositionComponent.pointMap.PointToMap)
-                    {
-                        if (!GameState.Instance.CurrentPlayer.Unpack(_world.Value, out int playerEntity)) continue;
-                        if (!_moveStatePool.Value.Has(playerEntity)) continue;
-                        ref var changePlayer = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());
-                        changePlayer.newPlayer = _world.Value.PackEntity(entityAlly);
-                        _mouseClickUpPool.Value.Del(entity);
-                        break;
-                    }    
+                    if (pointOnMap.pointMap.PointToMap != mousePositionComponent.pointMap.PointToMap) continue;
+                    if (!GameState.Instance.CurrentPlayer.Unpack(_world.Value, out int playerEntity)) continue;
+                    if (!_moveStatePool.Value.Has(playerEntity)) continue;
+                    ref var changePlayer = ref _changePlayerPool.Value.Add(_world.Value.NewEntity());
+                    changePlayer.newPlayer = _world.Value.PackEntity(entityAlly);
+                    _mouseClickUpPool.Value.Del(entity);
+                    break;
                 }
             }
         }

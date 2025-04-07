@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1aeb20408340e41b9d245da2fccfeb, type: 3}
   m_Name: NewZone 2
   m_EditorClassIdentifier: 
-  attackZone:
+  matrix:
     matrix:
     - values: 00000000000000000000000000000000000000000000000000000000
     - values: 01000000010000000100000001000000010000000100000001000000

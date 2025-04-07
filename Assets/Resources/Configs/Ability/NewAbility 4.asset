@@ -17,3 +17,4 @@ MonoBehaviour:
     Cost: 5
     TileView: {fileID: 11400000, guid: 9f3878d3d90a3da48b763071d9dfd676, type: 2}
     AttackZoneConfig: {fileID: 11400000, guid: 39630a37a785297409c6c80874908d13, type: 2}
+    AttackAreaConfig: {fileID: 11400000, guid: 46c0015d16db5bc45abb08a3c1574826, type: 2}

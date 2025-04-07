@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 namespace Client {
@@ -17,6 +18,8 @@ namespace Client {
         readonly EcsFilterInject<Inc<PlayerComponent,AbilityContainer,AttackStateComponent>> _filterPlayer;
         readonly EcsPoolInject<AbilityContainer> _abilityContainerPool;
         readonly EcsPoolInject<ChoosingAbilityUseEvent> _chosingAbilityPool;
+        readonly EcsPoolInject<AbilityToUseComponent> _abilityToUsePool;
+        readonly EcsPoolInject<RequestTurnAttackEvent> _requestTurnAttackPool;
         public void Init(IEcsSystems systems)
         {
             var entityInput = _world.Value.NewEntity();
@@ -61,6 +64,13 @@ namespace Client {
                         choosingAbilityComp.abilityEntity = _world.Value.PackEntity(abilityEntity);
                         choosingAbilityComp.ownerAbility = _world.Value.PackEntity(entityPlayer);
                     }
+                }
+                if(Input.GetKeyDown(KeyCode.V))
+                {
+                    if (!GameState.Instance.CurrentPlayer.Unpack(_world.Value, out int playerEntity)) continue;
+                    if (!_abilityToUsePool.Value.Has(playerEntity)) continue;
+                    ref var abilityToUseComp = ref _abilityToUsePool.Value.Get(playerEntity);
+                    _requestTurnAttackPool.Value.Add(abilityToUseComp.entityAbility.Id);
                 }
             }
         }

@@ -6,7 +6,7 @@ namespace Client {
         public List<EcsPackedEntity> Abilities;
         public void RemoveAbilities(EcsWorld world)
         {
-            var abilityToUsePool = world.GetPool<AbilityToUseComponent>();
+            var attackAteaPool = world.GetPool<AttackAreaComponent>();
             var attackZonePool = world.GetPool<AttackZoneComponent>();  
             foreach(var abilityPacked in Abilities)
             {
@@ -14,6 +14,10 @@ namespace Client {
                 if (attackZonePool.Has(abilityEntity))
                 {
                     attackZonePool.Del(abilityEntity);
+                }
+                if(attackAteaPool.Has(abilityEntity))
+                {
+                    attackAteaPool.Del(abilityEntity);
                 }
             }
         }

@@ -6,5 +6,8 @@ using UnityEngine;
 public class WeaponConfig : Config
 {
     [SerializeField] public List<AbilityConfig> AbilitiesConfig = new();
+    public Sprite WeaponSprite;
+    public Arm Arm;
+    public Equipment Equipment;
     // to do ViewWeaponLogick;
 }

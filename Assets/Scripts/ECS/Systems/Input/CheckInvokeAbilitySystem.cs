@@ -26,22 +26,11 @@ namespace Client {
                 foreach (var entityClick in _filterInput.Value)
                 {
                     ref var mouseClick = ref _mousePositionPool.Value.Get(entityClick);
-                    if (mouseClick.pointMap.PointToMap != attackZoneComp.Click.PointToMap) continue;
+                    if (mouseClick.pointMap.PointToMap != attackZoneComp.Center.PointToMap) continue;
                     _requestInvokePool.Value.Add(abilityEntity);
                     _mouseClickUpPool.Value.Del(entityClick);
                 }
             }
-            //        foreach (var entity in _filterInput.Value)
-            //{
-            //    ref var mouseClick = ref _mousePositionPool.Value.Get(entity);
-            //    foreach(var entityAbility in _filter.Value)
-            //    {
-            //        ref var abilityAttackZone = ref _attackZonePool.Value.Get(entityAbility);
-            //        if (mouseClick.pointMap.PointToMap != abilityAttackZone.Click.PointToMap) continue;
-            //        _invokeAbility.Value.Add(entityAbility);
-            //        _mouseClickUpPool.Value.Del(entity);
-            //    }
-            //}
         }
     }
 }

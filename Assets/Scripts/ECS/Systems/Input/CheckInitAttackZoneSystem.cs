@@ -6,7 +6,7 @@ namespace Client {
         readonly EcsFilterInject<Inc<PlayerComponent,AttackStateComponent, AbilityToUseComponent>> _filterPlayer;
         readonly EcsPoolInject<AbilityToUseComponent> _abilityToUsePool;
         readonly EcsFilterInject<Inc<MouseClickUpEvent, MousePositionComponent>> _filterInput;
-        readonly EcsPoolInject<InitAttackZoneEvent> _initAttackZonePool;
+        readonly EcsPoolInject<RequestAttackZoneEvent> _requestAttackZonePool;
         readonly EcsPoolInject<MousePositionComponent> _mousePositionPool;
         readonly EcsPoolInject<MouseClickUpEvent> _mouseClickUpPool;
         readonly EcsWorldInject _world;
@@ -18,8 +18,8 @@ namespace Client {
                 {
                     ref var mousePositionComp = ref _mousePositionPool.Value.Get(entityClick);
                     if (!abilityToUse.entityAbility.Unpack(_world.Value, out int abilityEntity)) continue;
-                    ref var initAttackZoneEvent = ref _initAttackZonePool.Value.Add(abilityEntity);
-                    initAttackZoneEvent.pointCenter = mousePositionComp.pointMap;
+                    ref var initAttackZoneEvent = ref _requestAttackZonePool.Value.Add(abilityEntity);
+                    initAttackZoneEvent.PointClick = mousePositionComp.pointMap;
                     _mouseClickUpPool.Value.Del(entityClick);
                 }
             }
